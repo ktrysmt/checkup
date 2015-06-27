@@ -1,0 +1,20 @@
+testsuites:
+- testcase: samplecodes
+  actions:
+  - visit: http://google.com
+  - test: hoge
+  - test: moemoe
+    
+  - moemoe: moemoe
+
+  - asset_text: 
+      element: sample
+      value: hogehoge
+
+  - anan: mogamoga
+
+- testcase: memo 
+  actions:
+  - name: test_02 
+
+
