@@ -2,24 +2,24 @@ package main
 
 import (
 	"fmt"
-	//"io/ioutil"
 	"os"
 	"regexp"
 	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
-	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
-	//	"unidriver/Godeps/_workspace/src/gopkg.in/yaml"
-	//	"unidriver/errors"
+	"unidriver/commands"
+	"unidriver/parsers"
 )
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "unidriver"
 	app.Version = "0.1.0"
-	app.Usage = ""
+	app.HideHelp = true
+	app.Usage = "E2E Testing Application"
 	app.Author = "aqafiam"
 	app.Before = doBefore
 	app.Action = doMain
 	app.Flags = []cli.Flag{
+		cli.HelpFlag,
 		browserFlag,
 		remoteFlag,
 	}
@@ -27,19 +27,33 @@ func main() {
 }
 
 func doBefore(c *cli.Context) error {
-	return nil
-}
 
-func doMain(c *cli.Context) {
+	cli.AppHelpTemplate = `NAME:
+  {{.Name}} - {{.Usage}}
 
+USAGE:
+  {{.Name}} [options] [arguments...]
+
+VERSION:
+  {{.Version}}{{if or .Author .Email}}
+
+ OPTIONS:
+  {{range .Flags}}{{.}}
+  {{end}}
+  `
 	// show help
 	args := c.Args()
 	if len(args) == 0 {
 		cli.ShowAppHelp(c)
 		os.Exit(1)
 	}
+	return nil
+}
 
-	// check file name
+func doMain(c *cli.Context) {
+
+	// check name of args
+	args := c.Args()
 	var yamlfiles []string
 	for _, arg := range args {
 		ok, _ := regexp.MatchString(".ya?ml$", arg)
@@ -53,43 +67,15 @@ func doMain(c *cli.Context) {
 	}
 
 	// open and read yamlfiles
-	p := Parser{yamlfiles}
-	datas := p.Do()
+	datas := parsers.ParseYaml(yamlfiles)
 
-	// drive on datas
-	d := Driver{c.String("browser"), c.String("remote"), datas}
-	d.Do()
+	// validate command names
+	commands.Validate(datas)
+
+	// driv'n it
+	commands.Do(c.String("browser"), c.String("remote"), datas)
 
 	os.Exit(999)
-
-	// digest only 1 file yet.
-	for _, data := range datas {
-		// digest only 1 actions yet.
-		for i := 0; i < 1; i++ {
-			pp.Println(i)
-			//pp.Println(data)
-			_, ok := data.(map[interface{}]interface{})["testsuites"]
-			//pp.Println(actions)
-			pp.Println(ok)
-			//actions, ok := data.([]interface{})["testsuites"].([]interface{})[i].(map[interface{}]interface{})["actions"]
-			//errors.Syntax(ok, "undefined actions.")
-
-			//d := Driver{c.String("browser"), c.String("remote"), actions}
-			//d.Do()
-		}
-	}
-
-	// pickup actions
-	//max := len(data["testsuites"].([]interface{}))
-	//for i := 0; i < max; i++ {
-	//for i := 0; i < 1; i++ {
-	//	actions, ok := data["testsuites"].([]interface{})[i].(map[interface{}]interface{})["actions"]
-	//	errors.Syntax(ok, "undefined actions.")
-
-	//	d := Driver{c.String("browser"), c.String("remote"), actions}
-	//	d.Do()
-	//}
-
 }
 
 var browserFlag = cli.StringFlag{
