@@ -14,8 +14,10 @@ func verifyElement(a interface{}) {
 
 	attr := a.(string)
 
-	fmt.Println("[verifyElement]: " + attr)
+	fmt.Print("[verifyElement]: " + attr + " ")
 	_, err := WD.FindElement(selenium.ByCSSSelector, attr)
 	errors.Fatal(err)
+	fmt.Print("SUCCESS")
+	fmt.Println("")
 
 }

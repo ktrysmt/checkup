@@ -10,6 +10,18 @@ import (
 )
 
 func main() {
+
+	cli.AppHelpTemplate = `
+USAGE:
+{{.Name}} [options] [testsuites.yaml...]
+
+VERSION:
+{{.Version}}
+
+OPTIONS:
+{{range .Flags}}  {{.}}
+{{end}}`
+
 	app := cli.NewApp()
 	app.Name = "unidriver"
 	app.Version = "0.1.0"
@@ -24,23 +36,11 @@ func main() {
 		remoteFlag,
 	}
 	app.Run(os.Args)
+
 }
 
 func doBefore(c *cli.Context) error {
 
-	cli.AppHelpTemplate = `NAME:
-  {{.Name}} - {{.Usage}}
-
-USAGE:
-  {{.Name}} [options] [arguments...]
-
-VERSION:
-  {{.Version}}{{if or .Author .Email}}
-
- OPTIONS:
-  {{range .Flags}}{{.}}
-  {{end}}
-  `
 	// show help
 	args := c.Args()
 	if len(args) == 0 {

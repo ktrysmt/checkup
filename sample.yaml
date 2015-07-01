@@ -1,8 +1,8 @@
 testsuites:
 - testcase: samplecodes
   commands:
-  - open: http://www.google.co.jp/
-  - capture: amam.png
+    - open: http://google.co.jp/
+    - capture: amam.png
 #  - asset_text: 
 #      element: sample
 #      value: hogehoge

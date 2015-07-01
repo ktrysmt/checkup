@@ -10,7 +10,9 @@ func Fatal(err error) {
 	if err != nil {
 		//fmt.Println("Fatal Error: ", err)
 		//os.Exit(0)
-		panic(err)
+		//panic(err)
+		fmt.Println(err)
+		os.Exit(0)
 	}
 
 }

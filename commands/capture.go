@@ -15,10 +15,10 @@ func capture(_filename interface{}) {
 
 	filename := _filename.(string)
 
-	fmt.Println("[capture]: " + filename)
-
+	fmt.Print("[capture]: " + filename + " ")
 	binary, err := WD.Screenshot()
 	errors.Fatal(err)
-
-	ioutil.WriteFile("./"+filename, binary, os.ModePerm)
+	ioutil.WriteFile(filename, binary, os.ModePerm)
+	fmt.Print("SUCCESS")
+	fmt.Println("")
 }
