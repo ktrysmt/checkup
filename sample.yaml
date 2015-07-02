@@ -1,8 +1,9 @@
-testsuites:
-- testcase: samplecodes
+testcase:
+- name: samplecodes
+  browser: firefox
   commands:
-    - open: http://google.co.jp/
-    - capture: amam.png
+    - get: http://google.co.jp/
+    - saveScreenshot: amam.png
 #  - asset_text: 
 #      element: sample
 #      value: hogehoge

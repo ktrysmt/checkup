@@ -24,15 +24,18 @@ func ParseYaml(yamlfiles []string) map[interface{}]interface{} {
 		err = yaml.Unmarshal(buffer, &data)
 		errors.Fatal(err)
 
-		// is defined testsuites
-		_, ok := data["testsuites"]
-		errors.Syntax(ok, "undefined [testsuites] in the file.")
+		// is defined testcase
+		_, ok := data["testcase"]
+		errors.Syntax(ok, "undefined [testcase] in the file.")
 
 		// is defined commands
-		max := len(data["testsuites"].([]interface{}))
+		max := len(data["testcase"].([]interface{}))
 		for i := 0; i < max; i++ {
-			_, ok := data["testsuites"].([]interface{})[i].(map[interface{}]interface{})["commands"]
+			var ok bool
+			_, ok = data["testcase"].([]interface{})[i].(map[interface{}]interface{})["commands"]
 			errors.Syntax(ok, "undefined [commands] in the file.")
+			_, ok = data["testcase"].([]interface{})[i].(map[interface{}]interface{})["browser"]
+			errors.Syntax(ok, "undefined [browser] in the file.")
 		}
 
 		datas[index] = data

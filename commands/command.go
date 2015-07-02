@@ -18,9 +18,11 @@ func Validate(datas map[interface{}]interface{}) {
 
 }
 
-func Do(browser string, remote string, datas map[interface{}]interface{}) {
+func Do(remote string, datas map[interface{}]interface{}) {
 
 	// create wd instance
+	browser := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["browser"].(string)
+	// x
 	caps := selenium.Capabilities{"browserName": browser}
 	wd, err := selenium.NewRemote(caps, remote)
 	defer wd.Quit()
@@ -33,31 +35,21 @@ func Do(browser string, remote string, datas map[interface{}]interface{}) {
 
 func Dive(flag string, datas map[interface{}]interface{}) {
 
-	// (*1) digest only 1 file yet.
-	for _, data := range datas {
-		// (*2) digest only 1 commands yet.
-		max := len(data.(map[interface{}]interface{})["testsuites"].([]interface{}))
-		for i := 0; i < max; i++ {
-			commands, _ := data.(map[interface{}]interface{})["testsuites"].([]interface{})[i].(map[interface{}]interface{})["commands"].([]interface{})
+	commands := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["commands"].([]interface{})
+	for _, commandSet := range commands {
 
-			for _, commandSet := range commands {
+		for _command, args := range commandSet.(map[interface{}]interface{}) {
 
-				for _command, args := range commandSet.(map[interface{}]interface{}) {
+			command := _command.(string)
 
-					command := _command.(string)
-
-					switch flag {
-					case "validate":
-						if _, ok := CommandList[command]; !ok {
-							errors.Syntax(ok, command+" is undefined command. ")
-						}
-					case "drive":
-						CommandList[command](args)
-					}
+			switch flag {
+			case "validate":
+				if _, ok := CommandList[command]; !ok {
+					errors.Syntax(ok, command+" is undefined command. ")
 				}
+			case "drive":
+				CommandList[command](args)
 			}
-			break // (*2)
 		}
-		break // (*1)
 	}
 }

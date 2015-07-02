@@ -5,6 +5,7 @@ import (
 	"os"
 	"regexp"
 	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
+	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/commands"
 	"unidriver/parsers"
 )
@@ -13,7 +14,7 @@ func main() {
 
 	cli.AppHelpTemplate = `
 USAGE:
-{{.Name}} [options] [testsuites.yaml...]
+{{.Name}} [options] [testcase.yaml...]
 
 VERSION:
 {{.Version}}
@@ -32,7 +33,6 @@ OPTIONS:
 	app.Action = doMain
 	app.Flags = []cli.Flag{
 		cli.HelpFlag,
-		browserFlag,
 		remoteFlag,
 	}
 	app.Run(os.Args)
@@ -73,15 +73,9 @@ func doMain(c *cli.Context) {
 	commands.Validate(datas)
 
 	// driv'n it
-	commands.Do(c.String("browser"), c.String("remote"), datas)
+	commands.Do(c.String("remote"), datas)
 
 	os.Exit(999)
-}
-
-var browserFlag = cli.StringFlag{
-	Name:  "browser, b",
-	Value: "firefox",
-	Usage: "browser name",
 }
 
 var remoteFlag = cli.StringFlag{

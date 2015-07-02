@@ -2,6 +2,8 @@ package commands
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"unidriver/errors"
 )
 
@@ -9,14 +11,14 @@ func init() {
 	CommandList["saveScreenshot"] = saveScreenshot
 }
 
-func saveScreenshot(_url interface{}) {
+func saveScreenshot(_filename interface{}) {
 
-	url := _url.(string)
+	filename := _filename.(string)
 
-	fmt.Print("[saveScreenshot]: " + url + " ")
-	err := WD.Get(url)
+	fmt.Print("[saveScreenshot]: " + filename + " ")
+	binary, err := WD.Screenshot()
 	errors.Fatal(err)
+	ioutil.WriteFile(filename, binary, os.ModePerm)
 	fmt.Print("SUCCESS")
 	fmt.Println("")
-
 }
