@@ -1,9 +1,6 @@
 package commands
 
 import (
-	//	"io/ioutil"
-	//	"os"
-	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"unidriver/errors"
 )
@@ -20,9 +17,7 @@ func Validate(datas map[interface{}]interface{}) {
 
 func Do(remote string, datas map[interface{}]interface{}) {
 
-	// create wd instance
 	browser := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["browser"].(string)
-	// x
 	caps := selenium.Capabilities{"browserName": browser}
 	wd, err := selenium.NewRemote(caps, remote)
 	defer wd.Quit()

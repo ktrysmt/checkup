@@ -5,7 +5,6 @@ import (
 	"os"
 	"regexp"
 	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
-	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/commands"
 	"unidriver/parsers"
 )
@@ -36,7 +35,6 @@ OPTIONS:
 		remoteFlag,
 	}
 	app.Run(os.Args)
-
 }
 
 func doBefore(c *cli.Context) error {
