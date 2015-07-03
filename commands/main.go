@@ -25,7 +25,7 @@ func Do(remote string, datas map[interface{}]interface{}) {
 	defer WD.Quit()
 	errors.Fatal(err)
 
-	Dive("drive", datas)
+	Dive("do", datas)
 }
 
 func Dive(flag string, datas map[interface{}]interface{}) {
@@ -35,12 +35,13 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 	for _, commandSet := range commands {
 		for c, args := range commandSet.(map[interface{}]interface{}) {
 			command := c.(string)
+
 			switch flag {
 			case "validate":
 				if _, ok := CommandList[command]; !ok {
 					errors.Syntax(ok, command+" is undefined command. ")
 				}
-			case "drive":
+			case "do":
 				CommandList[command](args)
 			}
 		}
