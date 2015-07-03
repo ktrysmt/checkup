@@ -12,11 +12,7 @@ func init() {
 func get(_url interface{}) {
 
 	url := _url.(string)
-
 	fmt.Print("[get]: " + url + " ")
 	err := WD.Get(url)
-	errors.Fatal(err)
-	fmt.Print("SUCCESS")
-	fmt.Println("")
-
+	errors.AssertResult(err)
 }

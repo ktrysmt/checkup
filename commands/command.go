@@ -18,25 +18,23 @@ func Validate(datas map[interface{}]interface{}) {
 func Do(remote string, datas map[interface{}]interface{}) {
 
 	browser := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["browser"].(string)
+
 	caps := selenium.Capabilities{"browserName": browser}
 	wd, err := selenium.NewRemote(caps, remote)
-	defer wd.Quit()
 	WD = wd
+	defer WD.Quit()
 	errors.Fatal(err)
 
 	Dive("drive", datas)
-
 }
 
 func Dive(flag string, datas map[interface{}]interface{}) {
 
 	commands := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["commands"].([]interface{})
+
 	for _, commandSet := range commands {
-
-		for _command, args := range commandSet.(map[interface{}]interface{}) {
-
-			command := _command.(string)
-
+		for c, args := range commandSet.(map[interface{}]interface{}) {
+			command := c.(string)
 			switch flag {
 			case "validate":
 				if _, ok := CommandList[command]; !ok {

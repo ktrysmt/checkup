@@ -7,6 +7,7 @@ import (
 	"unidriver/errors"
 )
 
+//func ParseYaml(yamlfiles []string) map[interface{}]interface{} {
 func ParseYaml(yamlfiles []string) map[interface{}]interface{} {
 
 	datas := make(map[interface{}]interface{})

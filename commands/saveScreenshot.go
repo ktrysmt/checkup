@@ -17,8 +17,11 @@ func saveScreenshot(_filename interface{}) {
 
 	fmt.Print("[saveScreenshot]: " + filename + " ")
 	binary, err := WD.Screenshot()
-	errors.Fatal(err)
-	ioutil.WriteFile(filename, binary, os.ModePerm)
-	fmt.Print("SUCCESS")
-	fmt.Println("")
+
+	if err == nil {
+		err = ioutil.WriteFile(filename, binary, os.ModePerm)
+		errors.AssertResult(err)
+	} else {
+		errors.AssertResult(err)
+	}
 }
