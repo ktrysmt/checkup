@@ -1,7 +1,8 @@
 package commands
 
 import (
-	//"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
+	//	"os"
+	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"unidriver/errors"
@@ -42,6 +43,7 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 
 			switch flag {
 			case "validate":
+
 				_, ok := CommandList[command]
 				errors.Syntax(ok, command+" is undefined command. ")
 

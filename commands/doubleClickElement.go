@@ -7,21 +7,24 @@ import (
 )
 
 func init() {
-	CommandList["clickElement"] = clickElement
+	CommandList["doubleClickElement"] = doubleClickElement
 }
 
-func clickElement(a interface{}) {
+func doubleClickElement(a interface{}) {
 
 	attr := a.(string)
 
-	fmt.Print("[clickElement]: " + attr)
+	fmt.Print("[clickElement]: " + attr + " ")
 
 	btn, err1 := WD.FindElement(selenium.ByCSSSelector, attr)
 	errors.Fatal(err1)
 
-	err2 := btn.Click()
+	err2 := btn.MoveTo(0, 0)
 	errors.Fatal(err2)
 
-	errors.PrintResult(err1, err2)
+	err3 := WD.DoubleClick()
+	errors.Fatal(err3)
+
+	errors.PrintResult(err1, err2, err3)
 
 }

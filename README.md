@@ -11,7 +11,9 @@ $ unidriver -r http://localhost:4444/wd/hub sample.yaml
 
 ## Install
 
-`go get github.com/aqafiam/unidriver`
+```
+$ go get github.com/aqafiam/unidriver
+```
 
 ## Author
 

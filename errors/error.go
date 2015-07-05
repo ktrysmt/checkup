@@ -42,7 +42,20 @@ func VerifyResult(err error) {
 		fmt.Println("")
 		fmt.Println(err)
 	} else {
-		fmt.Println(" SUCCESS")
+		fmt.Print(" SUCCESS")
 		fmt.Println("")
 	}
+}
+
+func PrintResult(err ...error) {
+
+	for _, s := range err {
+		if s != nil {
+			fmt.Print(" FAILURE")
+			fmt.Println("")
+			return
+		}
+	}
+	fmt.Print(" SUCCESS")
+	fmt.Println("")
 }
