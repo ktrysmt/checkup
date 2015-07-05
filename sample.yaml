@@ -3,7 +3,11 @@ testcase:
   browser: firefox
   commands:
     - get: http://google.co.jp/
-    - saveScreenshot: amam.png
+    - saveScreenshot: amam1.png
+    - setElementText: 
+        elem: "#lst-ib"
+        value: "hogehoge"
+    - saveScreenshot: amam2.png
 #  - asset_text: 
 #      element: sample
 #      value: hogehoge

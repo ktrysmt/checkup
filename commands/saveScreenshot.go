@@ -15,7 +15,7 @@ func saveScreenshot(_filename interface{}) {
 
 	filename := _filename.(string)
 
-	fmt.Print("[saveScreenshot]: " + filename + " ")
+	fmt.Print("[saveScreenshot]: " + filename)
 	binary, err := WD.Screenshot()
 
 	if err == nil {

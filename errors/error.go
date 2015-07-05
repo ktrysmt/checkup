@@ -25,12 +25,12 @@ func Syntax(ok bool, message string) {
 func AssertResult(err error) {
 
 	if err != nil {
-		fmt.Print("FAILURE")
+		fmt.Print(" FAILURE")
 		fmt.Println("")
 		fmt.Println(err)
 		os.Exit(0)
 	} else {
-		fmt.Print("SUCCESS")
+		fmt.Print(" SUCCESS")
 		fmt.Println("")
 	}
 }
@@ -38,11 +38,11 @@ func AssertResult(err error) {
 func VerifyResult(err error) {
 
 	if err != nil {
-		fmt.Print("FAILURE")
+		fmt.Print(" FAILURE")
 		fmt.Println("")
 		fmt.Println(err)
 	} else {
-		fmt.Println("SUCCESS")
+		fmt.Println(" SUCCESS")
 		fmt.Println("")
 	}
 }

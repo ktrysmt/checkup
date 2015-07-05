@@ -1,6 +1,6 @@
 {
 	"ImportPath": "unidriver",
-	"GoVersion": "go1.4.1",
+	"GoVersion": "go1.4.2",
 	"Deps": [
 		{
 			"ImportPath": "github.com/codegangsta/cli",
@@ -15,6 +15,10 @@
 		{
 			"ImportPath": "github.com/mattn/go-colorable",
 			"Rev": "d67e0b7d1797975196499f79bcc322c08b9f218b"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-scan",
+			"Rev": "fb44fccdfb0661ab56605fc23919bba5963cd1e7"
 		},
 		{
 			"ImportPath": "github.com/tebeka/selenium",
