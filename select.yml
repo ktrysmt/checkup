@@ -7,10 +7,4 @@ testcase:
     - setElementSelected: 
         target: //*[@id="can"]/option[5]
     - saveScreenshot: sele2.png
-#  - asset_text: 
-#      element: sample
-#      value: hogehoge
-#- testcase: memo 
-#  actions:
-#  - name: test_02 
-
+ 
