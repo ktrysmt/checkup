@@ -16,7 +16,7 @@ func verifyElementPresent(a interface{}) {
 
 	fmt.Print("[verifyElementPresent]: " + attr + " ")
 
-	_, err := WD.FindElement(selenium.ByCSSSelector, attr)
+	_, err := WD.FindElement(selenium.ByXPATH, attr)
 	errors.VerifyResult(err)
 
 }

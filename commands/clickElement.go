@@ -16,7 +16,7 @@ func clickElement(a interface{}) {
 
 	fmt.Print("[clickElement]: " + attr)
 
-	btn, err1 := WD.FindElement(selenium.ByCSSSelector, attr)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, attr)
 	errors.Fatal(err1)
 
 	err2 := btn.Click()

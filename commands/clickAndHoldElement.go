@@ -2,8 +2,6 @@ package commands
 
 import (
 	"fmt"
-	//	"os"
-	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"unidriver/errors"
@@ -20,7 +18,7 @@ func clickAndHoldElement(a interface{}) {
 
 	fmt.Print("[clickAndHoldElement]: " + attr)
 
-	btn, err1 := WD.FindElement(selenium.ByCSSSelector, attr)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, attr)
 	errors.Fatal(err1)
 
 	err2 := btn.MoveTo(0, 0)

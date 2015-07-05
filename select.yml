@@ -1,0 +1,16 @@
+testcase:
+- name: samplecodes
+  browser: firefox
+  commands:
+    - get: https://code.google.com/p/selenium/wiki/Buck
+    - saveScreenshot: sele1.png
+    - setElementSelected: 
+        target: //*[@id="can"]/option[5]
+    - saveScreenshot: sele2.png
+#  - asset_text: 
+#      element: sample
+#      value: hogehoge
+#- testcase: memo 
+#  actions:
+#  - name: test_02 
+

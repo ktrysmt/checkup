@@ -8,24 +8,21 @@ import (
 )
 
 func init() {
-	CommandList["releaseElement"] = releaseElement
+	CommandList["setElementSelected"] = setElementSelected
 }
 
-func releaseElement(a interface{}) {
+func setElementSelected(a interface{}) {
 
 	var attr string
 	scan.ScanTree(a, "/target", &attr)
 
-	fmt.Print("[releaseElement]: " + attr)
+	fmt.Print("[setElementSelected]: " + attr)
 
 	btn, err1 := WD.FindElement(selenium.ByXPATH, attr)
-	errors.Fatal(err1)
+	errors.Failure(err1)
 
-	err2 := btn.MoveTo(0, 0)
-	errors.Fatal(err2)
+	err2 := btn.Click()
+	errors.Failure(err2)
 
-	err3 := WD.ButtonUp()
-	errors.Fatal(err3)
-
-	errors.PrintResult(err1, err2, err3)
+	errors.Success(err1, err2)
 }

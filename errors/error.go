@@ -8,6 +8,7 @@ import (
 func Fatal(err error) {
 
 	if err != nil {
+		fmt.Println("")
 		fmt.Println(err)
 		os.Exit(0)
 	}
@@ -17,6 +18,7 @@ func Fatal(err error) {
 func Syntax(ok bool, message string) {
 
 	if !ok {
+		fmt.Println("")
 		fmt.Println("Syntax Error:", message)
 		os.Exit(0)
 	}
@@ -56,6 +58,22 @@ func PrintResult(err ...error) {
 			return
 		}
 	}
+	fmt.Print(" SUCCESS")
+	fmt.Println("")
+}
+
+func Failure(err error) {
+
+	if err != nil {
+		fmt.Print(" FAILURE")
+		fmt.Println("")
+		fmt.Println(err)
+		os.Exit(0)
+	}
+
+}
+
+func Success(err ...error) {
 	fmt.Print(" SUCCESS")
 	fmt.Println("")
 }

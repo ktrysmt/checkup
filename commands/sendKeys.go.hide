@@ -18,7 +18,7 @@ func sendKeys(args interface{}) {
 	//value := v.(string)
 
 	//		fmt.Print("[sendKeys]: " + target + " = " + value + " ")
-	//		elem, err := WD.FindElement(selenium.ByCSSSelector, target)
+	//		elem, err := WD.FindElement(selenium.ByXPATH, target)
 	//		elem.Clear()
 	//		elem.SendKeys(value)
 	//
