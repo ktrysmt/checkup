@@ -1,0 +1,8 @@
+testcase:
+  - name: drag and drop
+    browser: firefox
+    steps:
+    - get: http://selenium-client-factory.infradna.com/apidocs/com/saucelabs/selenium/client/htmlunit/SeleniumHTMLUnit.html
+#    - saveScreenshot: bodytext1.png
+    - assertBodyText: "SeleniumHTMLUnit"
+#    - saveScreenshot: bodytext2.png  

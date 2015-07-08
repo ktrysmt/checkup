@@ -1,0 +1,22 @@
+package steps
+
+import (
+	"fmt"
+	"unidriver/errors"
+)
+
+func init() {
+	StepList["storeTitle"] = storeTitle
+}
+
+func storeTitle(_url interface{}) {
+
+	url := _url.(string)
+
+	fmt.Print("[storeTitle]: " + url + " ")
+	err := WD.Get(url)
+	errors.Fatal(err)
+	fmt.Print("SUCCESS")
+	fmt.Println("")
+
+}

@@ -5,9 +5,8 @@ import (
 	"os"
 	"regexp"
 	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
-	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
-	"unidriver/commands"
 	"unidriver/parsers"
+	"unidriver/steps"
 )
 
 func main() {
@@ -52,8 +51,8 @@ func doMain(c *cli.Context) {
 
 	datas := parsers.ParseYaml(c.Args())
 
-	commands.Validate(datas)
-	commands.Do(c.String("remote"), datas)
+	steps.Validate(datas)
+	steps.Do(c.String("remote"), datas)
 
 }
 
@@ -65,9 +64,9 @@ var remoteFlag = cli.StringFlag{
 
 const Version string = "0.1.0"
 
-const AppHelpTemplate string = `USAGE: {{.Name}} [options] [testcase.yml...]
+const AppHelpTemplate string = `Usage: {{.Name}} [options] [testcase.yml...]
 
-OPTIONS:
+Options:
 {{range .Flags}}  {{.}}
 {{end}}
 `

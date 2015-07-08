@@ -1,0 +1,22 @@
+package steps
+
+import (
+	"fmt"
+	"unidriver/errors"
+)
+
+func init() {
+	StepList["deleteCookie"] = deleteCookie
+}
+
+func deleteCookie(_url interface{}) {
+
+	url := _url.(string)
+
+	fmt.Print("[deleteCookie]: " + url + " ")
+	err := WD.Get(url)
+	errors.Fatal(err)
+	fmt.Print("SUCCESS")
+	fmt.Println("")
+
+}

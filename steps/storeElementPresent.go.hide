@@ -1,0 +1,22 @@
+package steps
+
+import (
+	"fmt"
+	"unidriver/errors"
+)
+
+func init() {
+	StepList["storeElementPresent"] = storeElementPresent
+}
+
+func storeElementPresent(_url interface{}) {
+
+	url := _url.(string)
+
+	fmt.Print("[storeElementPresent]: " + url + " ")
+	err := WD.Get(url)
+	errors.Fatal(err)
+	fmt.Print("SUCCESS")
+	fmt.Println("")
+
+}

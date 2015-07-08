@@ -1,0 +1,12 @@
+testcase:
+  - name: drag and drop
+    browser: firefox
+    steps:
+    - get: http://cdn.liginc.co.jp/demo/2014/07/zuya/dd/index5.html
+    - saveScreenshot: drag1.png
+    - dragToAndDropElement: 
+        target: //*[@id="div1"]
+        value: //*[@id="dropBox"] 
+    - saveScreenshot: drag2.png  
+    - pause: 3000
+    - saveScreenshot: drag3.png  

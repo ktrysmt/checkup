@@ -28,12 +28,12 @@ func ParseYaml(yamlfiles []string) map[interface{}]interface{} {
 		_, ok := data["testcase"]
 		errors.Syntax(ok, "undefined [testcase] in the file.")
 
-		// is defined commands
+		// is defined steps
 		max := len(data["testcase"].([]interface{}))
 		for i := 0; i < max; i++ {
 			var ok bool
-			_, ok = data["testcase"].([]interface{})[i].(map[interface{}]interface{})["commands"]
-			errors.Syntax(ok, "undefined [commands] in the file.")
+			_, ok = data["testcase"].([]interface{})[i].(map[interface{}]interface{})["steps"]
+			errors.Syntax(ok, "undefined [steps] in the file.")
 			_, ok = data["testcase"].([]interface{})[i].(map[interface{}]interface{})["browser"]
 			errors.Syntax(ok, "undefined [browser] in the file.")
 		}
