@@ -12,7 +12,7 @@ func close(a interface{}) {
 
 	//attr := a.(string)
 
-	fmt.Print("[close]")
+	fmt.Print("[close]: ")
 	err := WD.Close()
 	StepFailure(err)
 

@@ -12,7 +12,7 @@ func refresh(a interface{}) {
 
 	//attr := a.(string)
 
-	fmt.Print("[refresh]")
+	fmt.Print("[refresh]: ")
 	err := WD.Close()
 	StepFailure(err)
 

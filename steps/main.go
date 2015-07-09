@@ -38,6 +38,10 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 
 	for _, stepSet := range steps {
 
+		if s, ok := stepSet.(string); ok {
+			stepSet = map[interface{}]interface{}{s: nil}
+		}
+
 		for c, args := range stepSet.(map[interface{}]interface{}) {
 			step := c.(string)
 			_, n := args.(int)

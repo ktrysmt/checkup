@@ -6,10 +6,10 @@ import (
 )
 
 func init() {
-	StepList["verifyBodyText"] = verifyBodyText
+	StepList["assertTextPresent"] = assertTextPresent
 }
 
-func verifyBodyText(a interface{}) {
+func assertTextPresent(a interface{}) {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
         return document.body.textContent;
@@ -17,10 +17,9 @@ func verifyBodyText(a interface{}) {
 
 	attr := a.(string)
 
-	fmt.Print("[verifyBodyText]: " + attr)
+	fmt.Print("[assertTextPresent]: " + attr)
 
 	arg := []interface{}{}
-
 	b, err := WD.ExecuteScript(SCRIPT, arg)
 	StepFailure(err)
 
@@ -30,7 +29,7 @@ func verifyBodyText(a interface{}) {
 	if m != -1 {
 		StepSuccess()
 	} else {
-		VerificationFailure()
+		AssertionFailure()
 	}
 
 }

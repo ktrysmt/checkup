@@ -10,7 +10,7 @@ func init() {
 
 func dismissAlert(a interface{}) {
 
-	fmt.Print("[dismissAlert]")
+	fmt.Print("[dismissAlert]: ")
 	err := WD.DismissAlert()
 	StepFailure(err)
 

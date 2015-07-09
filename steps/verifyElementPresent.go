@@ -16,7 +16,10 @@ func verifyElementPresent(a interface{}) {
 	fmt.Print("[verifyElementPresent]: " + attr)
 
 	_, err := WD.FindElement(selenium.ByXPATH, attr)
-	StepFailure(err)
+
+	if err != nil {
+		VerificationFailure()
+	}
 
 	StepSuccess()
 

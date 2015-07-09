@@ -16,7 +16,6 @@ func assertElementPresent(a interface{}) {
 	fmt.Print("[assertElementPresent]: " + attr)
 
 	_, err := WD.FindElement(selenium.ByXPATH, attr)
-	StepFailure(err)
 
 	if err != nil {
 		AssertionFailure()

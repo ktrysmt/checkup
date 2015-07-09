@@ -2,7 +2,7 @@ package steps
 
 import (
 	"fmt"
-	"regexp"
+	"strings"
 )
 
 func init() {
@@ -20,15 +20,13 @@ func assertBodyText(a interface{}) {
 	fmt.Print("[assertBodyText]: " + attr)
 
 	arg := []interface{}{}
-
-	b, err1 := WD.ExecuteScript(SCRIPT, arg)
-	StepFailure(err1)
+	b, err := WD.ExecuteScript(SCRIPT, arg)
+	StepFailure(err)
 
 	body := b.(string)
-	m, err2 := regexp.MatchString(attr, body)
-	StepFailure(err2)
+	m := strings.Index(body, attr)
 
-	if m {
+	if m != -1 {
 		StepSuccess()
 	} else {
 		AssertionFailure()
