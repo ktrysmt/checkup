@@ -1,0 +1,6 @@
+testcase:
+  - name: cookie
+    browser: firefox
+    steps:
+    - get: http://yahoo.co.jp/
+    - assertCookieByName: B
