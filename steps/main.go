@@ -42,8 +42,8 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 
 		for s, a := range stepSet.(map[interface{}]interface{}) {
 
-			step := SymplifyTypeAttributeTarget(s)
-			args := NestingTarget(SymplifyTypeAttributeValue(a))
+			step := SimplifyTypeAttributeTarget(s)
+			args := NestingTarget(SimplifyTypeAttributeValue(a))
 
 			switch flag {
 			case "validate":
@@ -134,7 +134,7 @@ func NormalizeStepSet(o interface{}) interface{} {
 
 }
 
-func SymplifyTypeAttributeTarget(o interface{}) string {
+func SimplifyTypeAttributeTarget(o interface{}) string {
 	var v string
 	switch o.(type) {
 	case float64:
@@ -155,7 +155,7 @@ func SymplifyTypeAttributeTarget(o interface{}) string {
 	return v
 }
 
-func SymplifyTypeAttributeValue(o interface{}) interface{} {
+func SimplifyTypeAttributeValue(o interface{}) interface{} {
 	var v interface{}
 	switch o.(type) {
 	case float64:

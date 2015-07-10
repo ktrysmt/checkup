@@ -16,7 +16,7 @@ func setElementText(a interface{}) {
 
 	scan.ScanTree(a, "/target", &t)
 	scan.ScanTree(a, "/value", &v)
-	val := SymplifyTypeAttributeValue(v)
+	val := SimplifyTypeAttributeValue(v)
 
 	target := t.(string)
 	value := val.(string)

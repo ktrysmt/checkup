@@ -15,7 +15,7 @@ func verifyEval(a interface{}) {
 
 	scan.ScanTree(a, "/target", &t)
 	scan.ScanTree(a, "/value", &v)
-	val := SymplifyTypeAttributeValue(v)
+	val := SimplifyTypeAttributeValue(v)
 
 	target := t.(string)
 	value := val.(string)
@@ -28,7 +28,7 @@ func verifyEval(a interface{}) {
 	res, err1 := WD.ExecuteScript(SCRIPT, arg)
 	StepFailure(err1)
 
-	r := SymplifyTypeAttributeValue(res)
+	r := SimplifyTypeAttributeValue(res)
 
 	if r == value {
 		StepSuccess()
