@@ -2,8 +2,6 @@ package steps
 
 import (
 	"fmt"
-	//	"os"
-	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
