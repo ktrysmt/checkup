@@ -3,4 +3,9 @@ testcase:
     browser: firefox
     steps:
     - get: http://yahoo.co.jp/
-    - assertCookieByName: B
+    - assertCookiePresent: 
+        target: B
+        value: aupbrqlapvnv6&b=3&s=r1
+    - assertCookieByName: 
+        target: B
+        value: aupbrqlapvnv6&b=3&s=r1 

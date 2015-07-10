@@ -12,10 +12,14 @@ func init() {
 
 func assertElementValue(a interface{}) {
 
-	var target, value string
+	var t, v interface{}
 
-	scan.ScanTree(a, "/target", &target)
-	scan.ScanTree(a, "/value", &value)
+	scan.ScanTree(a, "/target", &t)
+	scan.ScanTree(a, "/value", &v)
+	val := SymplifyTypeAttributeValue(v)
+
+	target := t.(string)
+	value := val.(string)
 
 	fmt.Print("[assertElementValue]: " + target + " => " + value)
 

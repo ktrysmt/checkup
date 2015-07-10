@@ -147,6 +147,8 @@ func SymplifyTypeAttributeTarget(o interface{}) string {
 		v = strconv.FormatBool(o.(bool))
 	case map[interface{}]interface{}:
 		// none
+	case nil:
+		v = ""
 	default:
 		v = o.(string)
 	}
@@ -164,6 +166,8 @@ func SymplifyTypeAttributeValue(o interface{}) interface{} {
 		v = strconv.Itoa(o.(int))
 	case bool:
 		v = strconv.FormatBool(o.(bool))
+	case nil:
+		v = ""
 	default:
 		v = o
 	}
