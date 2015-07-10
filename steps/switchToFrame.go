@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 )
 
@@ -11,10 +12,11 @@ func init() {
 
 func switchToFrame(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[switchToFrame]: " + attr)
-	btn, err1 := WD.FindElement(selenium.ByXPATH, attr)
+	fmt.Print("[switchToFrame]: " + target)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
 	StepFailure(err1)
 
 	id, err2 := btn.GetAttribute("id")

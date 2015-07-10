@@ -10,8 +10,6 @@ func init() {
 
 func goBack(a interface{}) {
 
-	//attr := a.(string)
-
 	fmt.Print("[goBack]: ")
 	err := WD.Back()
 	StepFailure(err)

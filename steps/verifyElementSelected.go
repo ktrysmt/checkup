@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 )
 
@@ -11,11 +12,12 @@ func init() {
 
 func verifyElementSelected(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[verifyElementSelected]: " + attr)
+	fmt.Print("[verifyElementSelected]: " + target)
 
-	btn, err1 := WD.FindElement(selenium.ByXPATH, attr)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
 	StepFailure(err1)
 
 	ok, err2 := btn.IsSelected()

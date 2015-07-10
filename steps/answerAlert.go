@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
@@ -10,10 +11,11 @@ func init() {
 
 func answerAlert(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[answerAlert]: " + attr)
-	err := WD.SetAlertText(attr)
+	fmt.Print("[answerAlert]: " + target)
+	err := WD.SetAlertText(target)
 	StepFailure(err)
 
 	StepSuccess()

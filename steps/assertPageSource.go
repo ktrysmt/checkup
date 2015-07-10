@@ -3,6 +3,7 @@ package steps
 import (
 	"fmt"
 	"strings"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
@@ -15,16 +16,17 @@ func assertPageSource(a interface{}) {
         return document.documentElement.outerHTML;
 	`
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[assertPageSource]: " + attr)
+	fmt.Print("[assertPageSource]: " + target)
 
 	arg := []interface{}{}
 	b, err := WD.ExecuteScript(SCRIPT, arg)
 	StepFailure(err)
 
 	body := b.(string)
-	m := strings.Index(body, attr)
+	m := strings.Index(body, target)
 
 	if m != -1 {
 		StepSuccess()

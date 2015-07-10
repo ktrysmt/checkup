@@ -1,0 +1,11 @@
+testcase:
+  - name: drag and drop
+    browser: firefox
+    steps:
+    - get: http://selenium-client-factory.infradna.com/apidocs/com/saucelabs/selenium/client/htmlunit/SeleniumHTMLUnit.html
+#    - assertEval: 1
+#    - assertEval: true
+#    - assertEval: aaaa
+    - assertEval: 
+        target: return 1;
+        value: 1

@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 )
 
@@ -11,11 +12,12 @@ func init() {
 
 func clickAndHoldElement(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[clickAndHoldElement]: " + attr)
+	fmt.Print("[clickAndHoldElement]: " + target)
 
-	btn, err1 := WD.FindElement(selenium.ByXPATH, attr)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
 	StepFailure(err1)
 
 	err2 := btn.MoveTo(0, 0)

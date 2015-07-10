@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
@@ -12,9 +13,10 @@ func init() {
 
 func pause(a interface{}) {
 
-	target := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[pause]: " + target + " msec")
+	fmt.Print("[pause]: " + target + "(msec)")
 
 	msec, err := strconv.Atoi(target)
 	StepFailure(err)

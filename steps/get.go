@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
@@ -10,9 +11,11 @@ func init() {
 
 func get(a interface{}) {
 
-	url := a.(string)
-	fmt.Print("[get]: " + url)
-	err := WD.Get(url)
+	var target string
+	scan.ScanTree(a, "/target", &target)
+
+	fmt.Print("[get]: " + target)
+	err := WD.Get(target)
 	StepFailure(err)
 
 	StepSuccess()

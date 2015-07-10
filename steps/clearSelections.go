@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 )
 
@@ -20,16 +21,17 @@ for(i=0;len>i;i++){
 }
 return true;
 `
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[clearSelections]: " + attr)
+	fmt.Print("[clearSelections]: " + target)
 
-	_, err1 := WD.FindElement(selenium.ByXPATH, attr)
+	_, err1 := WD.FindElement(selenium.ByXPATH, target)
 	StepFailure(err1)
 
 	var err2 error
 
-	arg := []interface{}{attr}
+	arg := []interface{}{target}
 	_, err2 = WD.ExecuteScript(SCRIPT, arg)
 	StepFailure(err2)
 

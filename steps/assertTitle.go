@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
@@ -10,13 +11,14 @@ func init() {
 
 func assertTitle(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[assertTitle]: " + attr)
+	fmt.Print("[assertTitle]: " + target)
 	title, err := WD.Title()
 	StepFailure(err)
 
-	if title == attr {
+	if title == target {
 		StepSuccess()
 	} else {
 		AssertionFailure()

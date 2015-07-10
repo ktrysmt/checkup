@@ -12,9 +12,14 @@ func init() {
 
 func dragToAndDropElement(a interface{}) {
 
-	var target, value string
-	scan.ScanTree(a, "/target", &target)
-	scan.ScanTree(a, "/value", &value)
+	var t, v interface{}
+
+	scan.ScanTree(a, "/target", &t)
+	scan.ScanTree(a, "/value", &v)
+	val := SymplifyTypeAttributeValue(v)
+
+	target := t.(string)
+	value := val.(string)
 
 	fmt.Print("[dragToAndDropElement]: " + target + " => " + value)
 

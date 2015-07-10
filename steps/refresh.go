@@ -10,10 +10,8 @@ func init() {
 
 func refresh(a interface{}) {
 
-	//attr := a.(string)
-
 	fmt.Print("[refresh]: ")
-	err := WD.Close()
+	err := WD.Refresh()
 	StepFailure(err)
 
 	StepSuccess()

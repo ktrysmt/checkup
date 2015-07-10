@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	//	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
+	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"unidriver/errors"
@@ -36,49 +36,28 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 
 	steps := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["steps"].([]interface{})
 
-	for _, stepSet := range steps {
+	for _, ss := range steps {
 
-		if s, ok := stepSet.(string); ok {
-			stepSet = map[interface{}]interface{}{s: nil}
-		}
+		stepSet := NormalizeStepSet(ss)
 
-		for c, args := range stepSet.(map[interface{}]interface{}) {
-			step := c.(string)
-			_, n := args.(int)
-			_, s := args.(string)
-			_, i := args.(interface{})
+		for s, a := range stepSet.(map[interface{}]interface{}) {
+
+			step := SymplifyTypeAttributeTarget(s)
+			args := NestingTarget(SymplifyTypeAttributeValue(a))
 
 			switch flag {
 			case "validate":
-
 				_, ok := StepList[step]
-				errors.Syntax(ok, step+" is undefined step. ")
+				errors.Syntax(ok, "["+step+"] is undefined step.")
 
-				if n == false && s == false && i == true {
-					_, target_ok := args.(map[interface{}]interface{})["target"]
-					errors.Syntax(target_ok, "undefined the [target] attribute.")
+				_, t_ok := args.(map[interface{}]interface{})["target"]
+				errors.Syntax(t_ok, "undefined the [target] attribute.")
 
-					_, value_ok := args.(map[interface{}]interface{})["value"]
-					if value_ok && !target_ok {
-						errors.Syntax(false, "undefined [target] and [value] attributes.")
-					}
+				_, v_ok := args.(map[interface{}]interface{})["value"]
+				if v_ok && !t_ok {
+					errors.Syntax(false, "undefined [target] and [value] attributes.")
 				}
-
 			case "do":
-
-				if n == false && s == false && i == true {
-					target, _ := args.(map[interface{}]interface{})["target"]
-					_, value_ok := args.(map[interface{}]interface{})["value"]
-					if !value_ok {
-						args = target
-					}
-				}
-				if n == true && s == false && i == true {
-					var err error
-					args = strconv.Itoa(args.(int))
-					WDFatal(err)
-				}
-
 				StepList[step](args)
 			}
 		}
@@ -107,6 +86,88 @@ func WDFatal(err error) {
 func WDQuit() int {
 	defer WD.Quit()
 	return 1
+}
+
+//TODO:------------------------------------------------------
+func PrintStep(name string, a ...interface{}) {
+
+	var target, value interface{}
+
+	ok1 := scan.ScanTree(a, "/[0]/target", &target)
+	ok2 := scan.ScanTree(a, "/[0]/value", &value)
+	pp.Println(a)
+	pp.Println(target)
+	pp.Println(ok1)
+	pp.Println(value)
+	pp.Println(ok2)
+	os.Exit(9)
+
+	for i, arg := range a {
+		pp.Println("----")
+		pp.Println(i)
+		pp.Println(arg)
+	}
+	os.Exit(9)
+}
+
+func NestingTarget(o interface{}) interface{} {
+
+	switch o.(type) {
+	case int, string, bool:
+		o = map[interface{}]interface{}{"target": o}
+	}
+	return o
+}
+
+func NormalizeStepSet(o interface{}) interface{} {
+
+	var result map[interface{}]interface{}
+
+	switch o.(type) {
+	case map[interface{}]interface{}:
+		result = o.(map[interface{}]interface{})
+	default:
+		result = map[interface{}]interface{}{o: nil}
+	}
+
+	return result
+
+}
+
+func SymplifyTypeAttributeTarget(o interface{}) string {
+	var v string
+	switch o.(type) {
+	case float64:
+		v = strconv.Itoa(int(o.(float64)))
+	case float32:
+		v = strconv.Itoa(int(o.(float32)))
+	case int:
+		v = strconv.Itoa(o.(int))
+	case bool:
+		v = strconv.FormatBool(o.(bool))
+	case map[interface{}]interface{}:
+		// none
+	default:
+		v = o.(string)
+	}
+	return v
+}
+
+func SymplifyTypeAttributeValue(o interface{}) interface{} {
+	var v interface{}
+	switch o.(type) {
+	case float64:
+		v = strconv.Itoa(int(o.(float64)))
+	case float32:
+		v = strconv.Itoa(int(o.(float32)))
+	case int:
+		v = strconv.Itoa(o.(int))
+	case bool:
+		v = strconv.FormatBool(o.(bool))
+	default:
+		v = o
+	}
+	return v
 }
 
 func StepFailure(err error) {

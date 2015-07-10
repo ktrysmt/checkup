@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
 )
 
@@ -11,11 +12,12 @@ func init() {
 
 func assertElementPresent(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[assertElementPresent]: " + attr)
+	fmt.Print("[assertElementPresent]: " + target)
 
-	_, err := WD.FindElement(selenium.ByXPATH, attr)
+	_, err := WD.FindElement(selenium.ByXPATH, target)
 
 	if err != nil {
 		AssertionFailure()

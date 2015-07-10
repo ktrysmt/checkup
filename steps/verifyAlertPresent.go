@@ -10,8 +10,6 @@ func init() {
 
 func verifyAlertPresent(a interface{}) {
 
-	//	attr := a.(string)
-
 	fmt.Print("[verifyAlertPresent]: ")
 	_, err := WD.AlertText()
 

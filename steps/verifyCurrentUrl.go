@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
@@ -10,13 +11,14 @@ func init() {
 
 func verifyCurrentUrl(a interface{}) {
 
-	attr := a.(string)
+	var target string
+	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[verifyCurrentUrl]: " + attr)
+	fmt.Print("[verifyCurrentUrl]: " + target)
 	url, err := WD.CurrentURL()
 	StepFailure(err)
 
-	if url == attr {
+	if url == target {
 		StepSuccess()
 	} else {
 		VerificationFailure()
