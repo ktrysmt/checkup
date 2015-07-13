@@ -1,20 +1,24 @@
 package steps
 
 import (
+	"checkup/Godeps/_workspace/src/github.com/k0kubun/pp"
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"checkup/errors"
 	"fmt"
 	"os"
 	"strconv"
-	"unidriver/Godeps/_workspace/src/github.com/k0kubun/pp"
-	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
-	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
-	"unidriver/errors"
+	"time"
 )
 
 var WD selenium.WebDriver
 
 var StepList = map[string]func(interface{}){}
 
+var DefaultTimeout = "60000"
+
 func Validate(datas map[interface{}]interface{}) {
+
 	Dive("validate", datas)
 
 }
@@ -25,11 +29,27 @@ func Do(remote string, datas map[interface{}]interface{}) {
 	scan.ScanTree(datas, "/[0]/testcase[0]/browser/", &browser)
 
 	caps := selenium.Capabilities{"browserName": browser}
-	wd, err := selenium.NewRemote(caps, remote)
+	wd, err1 := selenium.NewRemote(caps, remote)
 	WD = wd
-	WDFatal(err)
+	WDFatal(err1)
+	defer WD.Quit()
+
+	SetAroundTimeout(datas)
+	/*
+		var timeout time.Duration
+		scan.ScanTree(datas, "/[0]/testcase[0]/timeout/", &timeout)
+		if timeout == 0 {
+			i, err2 := strconv.Atoi(DefaultTimeout)
+			WDFatal(err2)
+			timeout = time.Duration(i)
+		} else {
+			DefaultTimeout = strconv.Itoa(int(timeout))
+		}
+		WD.SetImplicitWaitTimeout(timeout)
+	*/
 
 	Dive("do", datas)
+
 }
 
 func Dive(flag string, datas map[interface{}]interface{}) {
@@ -65,12 +85,12 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 }
 
 const SCRIPT_getElementsByXPath = `document.getElementsByXPath = function(expression, parentElement) {
-  var r = []
-  var x = document.evaluate(expression, parentElement || document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null)
+  var r = [];
+  var x = document.evaluate(expression, parentElement || document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
   for (var i = 0, l = x.snapshotLength; i < l; i++) {
-    r.push(x.snapshotItem(i))
+    r.push(x.snapshotItem(i));
   }
-  return r
+  return r;
 }
 `
 
@@ -174,7 +194,7 @@ func SimplifyTypeAttributeValue(o interface{}) interface{} {
 	return v
 }
 
-func StepFailure(err error) {
+func StepFailure(err interface{}) {
 
 	if err != nil {
 		fmt.Print(" Failure")
@@ -186,8 +206,10 @@ func StepFailure(err error) {
 }
 
 func StepSuccess() {
+
 	fmt.Print(" Success")
 	fmt.Println("")
+
 }
 
 func AssertionFailure() {
@@ -202,5 +224,36 @@ func VerificationFailure() {
 
 	fmt.Print(" Verification Failure")
 	fmt.Println("")
+
+}
+
+func SetStepTimeout(value string) (int, string) {
+
+	var view string
+
+	if value == "" {
+		value = DefaultTimeout
+		view = value + " msec (default)"
+	} else {
+		view = value + " msec "
+	}
+	var err1 error
+	limit, err1 := strconv.Atoi(value)
+	StepFailure(err1)
+
+	return limit, view
+}
+
+func SetAroundTimeout(datas map[interface{}]interface{}) {
+	var timeout time.Duration
+	scan.ScanTree(datas, "/[0]/testcase[0]/timeout/", &timeout)
+	if timeout == 0 {
+		i, err2 := strconv.Atoi(DefaultTimeout)
+		WDFatal(err2)
+		timeout = time.Duration(i)
+	} else {
+		DefaultTimeout = strconv.Itoa(int(timeout))
+	}
+	WD.SetImplicitWaitTimeout(timeout)
 
 }

@@ -3,8 +3,8 @@ package parsers
 import (
 	"io/ioutil"
 	"os"
-	"unidriver/Godeps/_workspace/src/gopkg.in/yaml"
-	"unidriver/errors"
+	"checkup/Godeps/_workspace/src/gopkg.in/yaml"
+	"checkup/errors"
 )
 
 func ParseYaml(yamlfiles []string) map[interface{}]interface{} {

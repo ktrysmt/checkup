@@ -2,8 +2,8 @@ package steps
 
 import (
 	"fmt"
-	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
-	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 )
 
 func init() {

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
+	"checkup/Godeps/_workspace/src/github.com/codegangsta/cli"
 )
 
 func TestNewContext(t *testing.T) {

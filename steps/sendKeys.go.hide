@@ -2,8 +2,8 @@ package steps
 
 import (
 //	"fmt"
-//	"unidriver/Godeps/_workspace/src/github.com/tebeka/selenium"
-//	"unidriver/errors"
+//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+//	"checkup/errors"
 )
 
 func init() {

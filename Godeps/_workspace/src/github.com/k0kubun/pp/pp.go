@@ -7,7 +7,7 @@ import (
 	"os"
 	"sync"
 
-	"unidriver/Godeps/_workspace/src/github.com/mattn/go-colorable"
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-colorable"
 )
 
 var (

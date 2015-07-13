@@ -1,0 +1,8 @@
+testcase:
+  - name: drag and drop
+    browser: firefox
+    #timeout: aa
+    timeout: "10001"
+    steps:
+    - get: https://code.google.com/p/selenium/wiki/JsonWireProtocol
+    - waitForBodyText: "Wire Protocol"

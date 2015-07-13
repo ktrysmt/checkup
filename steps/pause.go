@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {

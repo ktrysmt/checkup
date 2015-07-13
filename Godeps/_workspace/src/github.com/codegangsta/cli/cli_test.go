@@ -3,7 +3,7 @@ package cli_test
 import (
 	"os"
 
-	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
+	"checkup/Godeps/_workspace/src/github.com/codegangsta/cli"
 )
 
 func Example() {

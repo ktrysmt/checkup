@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"unidriver/Godeps/_workspace/src/github.com/codegangsta/cli"
-	"unidriver/parsers"
-	"unidriver/steps"
+	"checkup/Godeps/_workspace/src/github.com/codegangsta/cli"
+	"checkup/parsers"
+	"checkup/steps"
 )
 
 func main() {
 
 	cli.AppHelpTemplate = AppHelpTemplate
 	app := cli.NewApp()
-	app.Name = "unidriver"
+	app.Name = "checkup"
 	app.Version = Version
 	app.HideHelp = true
 	app.Usage = "E2E Testing Application"

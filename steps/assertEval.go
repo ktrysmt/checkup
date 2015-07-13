@@ -1,8 +1,8 @@
 package steps
 
 import (
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"fmt"
-	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {

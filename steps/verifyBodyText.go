@@ -3,7 +3,7 @@ package steps
 import (
 	"fmt"
 	"strings"
-	"unidriver/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
