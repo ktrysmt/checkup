@@ -8,28 +8,23 @@ import (
 )
 
 func init() {
-	StepList["waitForBodyText"] = waitForBodyText
+	StepList["waitForTextPresent"] = waitForTextPresent
 }
 
-func waitForBodyText(a interface{}) {
+func waitForTextPresent(a interface{}) {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
         return document.body.textContent;
 	`
 
-	var t, v interface{}
-
+	var t interface{}
 	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
 	target := t.(string)
-	value := val.(string)
 
 	// set timeout
-	limit := SetStepTimeout(value)
+	limit := SetStepTimeout("")
 
-	fmt.Print("[waitForBodyText]: " + target)
+	fmt.Print("[waitForTextPresent]: " + target)
 
 	// wait for
 	arg := []interface{}{}
@@ -52,4 +47,5 @@ func waitForBodyText(a interface{}) {
 		time.Sleep(time.Millisecond * 500)
 		latency += 500
 	}
+
 }

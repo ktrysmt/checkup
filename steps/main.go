@@ -7,15 +7,17 @@ import (
 	"checkup/errors"
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 	"time"
 )
 
-var WD selenium.WebDriver
-
-var StepList = map[string]func(interface{}){}
-
-var DefaultTimeout = "60000"
+var (
+	WD             selenium.WebDriver
+	StepList       = map[string]func(interface{}){}
+	BaseUrl        = ""
+	DefaultTimeout = "60000"
+)
 
 func Validate(datas map[interface{}]interface{}) {
 
@@ -25,7 +27,7 @@ func Validate(datas map[interface{}]interface{}) {
 
 func Do(remote string, datas map[interface{}]interface{}) {
 
-	var browser string
+	var browser, baseurl string
 	scan.ScanTree(datas, "/[0]/testcase[0]/browser/", &browser)
 
 	caps := selenium.Capabilities{"browserName": browser}
@@ -34,19 +36,10 @@ func Do(remote string, datas map[interface{}]interface{}) {
 	WDFatal(err1)
 	defer WD.Quit()
 
+	scan.ScanTree(datas, "/[0]/testcase[0]/baseurl/", &baseurl)
+	BaseUrl = DefineBaseUrl(baseurl)
+
 	SetAroundTimeout(datas)
-	/*
-		var timeout time.Duration
-		scan.ScanTree(datas, "/[0]/testcase[0]/timeout/", &timeout)
-		if timeout == 0 {
-			i, err2 := strconv.Atoi(DefaultTimeout)
-			WDFatal(err2)
-			timeout = time.Duration(i)
-		} else {
-			DefaultTimeout = strconv.Itoa(int(timeout))
-		}
-		WD.SetImplicitWaitTimeout(timeout)
-	*/
 
 	Dive("do", datas)
 
@@ -227,21 +220,16 @@ func VerificationFailure() {
 
 }
 
-func SetStepTimeout(value string) (int, string) {
-
-	var view string
+func SetStepTimeout(value string) int {
 
 	if value == "" {
 		value = DefaultTimeout
-		view = value + " msec (default)"
-	} else {
-		view = value + " msec "
 	}
 	var err1 error
 	limit, err1 := strconv.Atoi(value)
 	StepFailure(err1)
 
-	return limit, view
+	return limit
 }
 
 func SetAroundTimeout(datas map[interface{}]interface{}) {
@@ -256,4 +244,16 @@ func SetAroundTimeout(datas map[interface{}]interface{}) {
 	}
 	WD.SetImplicitWaitTimeout(timeout)
 
+}
+
+func DefineBaseUrl(url string) string {
+
+	ok, _ := regexp.MatchString("", url)
+
+	str := ""
+	if !ok {
+		str = "x"
+	}
+	// wip define base url
+	return str
 }

@@ -1,9 +1,9 @@
 package steps
 
 import (
-	"fmt"
 	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {

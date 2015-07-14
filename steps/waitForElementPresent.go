@@ -23,9 +23,9 @@ func waitForElementPresent(a interface{}) {
 	value := val.(string)
 
 	// set timeout
-	limit, view_value := SetStepTimeout(value)
+	limit := SetStepTimeout(value)
 
-	fmt.Print("[waitForElementPresent]: " + target + " : " + view_value)
+	fmt.Print("[waitForElementPresent]: " + target)
 
 	// wait for
 	latency := 0

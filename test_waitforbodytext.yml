@@ -6,3 +6,6 @@ testcase:
     steps:
     - get: https://code.google.com/p/selenium/wiki/JsonWireProtocol
     - waitForBodyText: "Wire Protocol"
+    - waitForText: 
+        target: //*[@id="mt"]/a[5]/button
+        value:  "Export to GitHub"

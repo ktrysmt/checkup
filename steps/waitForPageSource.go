@@ -27,9 +27,9 @@ func waitForPageSource(a interface{}) {
 	value := val.(string)
 
 	// set timeout
-	limit, view_value := SetStepTimeout(value)
+	limit := SetStepTimeout(value)
 
-	fmt.Print("[waitForPageSource]: " + target + " : " + view_value)
+	fmt.Print("[waitForPageSource]: " + target)
 
 	// wait for
 	arg := []interface{}{}

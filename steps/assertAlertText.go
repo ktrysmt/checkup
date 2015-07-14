@@ -1,8 +1,8 @@
 package steps
 
 import (
-	"fmt"
 	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"fmt"
 )
 
 func init() {
