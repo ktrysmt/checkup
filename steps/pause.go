@@ -4,21 +4,17 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["pause"] = pause
 }
 
-func pause(a interface{}) {
+func pause() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
+	fmt.Print("[pause]: " + Arg1 + "(msec)")
 
-	fmt.Print("[pause]: " + target + "(msec)")
-
-	msec, err := strconv.Atoi(target)
+	msec, err := strconv.Atoi(Arg1)
 	StepFailure(err)
 
 	time.Sleep(time.Millisecond * time.Duration(msec))

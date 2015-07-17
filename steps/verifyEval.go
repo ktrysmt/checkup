@@ -2,27 +2,17 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["verifyEval"] = verifyEval
 }
 
-func verifyEval(a interface{}) {
+func verifyEval() {
 
-	var t, v interface{}
+	SCRIPT := SCRIPT_getElementsByXPath + Arg1
 
-	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
-	target := t.(string)
-	value := val.(string)
-
-	SCRIPT := SCRIPT_getElementsByXPath + target
-
-	fmt.Print("[verifyEval]: " + target + " => " + value)
+	fmt.Print("[verifyEval]: " + Arg1 + " => " + Arg2)
 
 	arg := []interface{}{}
 	res, err1 := WD.ExecuteScript(SCRIPT, arg)
@@ -30,7 +20,7 @@ func verifyEval(a interface{}) {
 
 	r := SimplifyTypeAttributeValue(res)
 
-	if r == value {
+	if r == Arg2 {
 		StepSuccess()
 	} else {
 		AssertionFailure()

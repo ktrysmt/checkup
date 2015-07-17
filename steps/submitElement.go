@@ -1,23 +1,19 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["submitElement"] = submitElement
 }
 
-func submitElement(a interface{}) {
+func submitElement() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
+	fmt.Print("[submitElement]: " + Arg1)
 
-	fmt.Print("[submitElement]: " + target)
-
-	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	err2 := btn.Submit()

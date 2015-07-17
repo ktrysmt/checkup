@@ -8,7 +8,7 @@ func init() {
 	StepList["assertAlertPresent"] = assertAlertPresent
 }
 
-func assertAlertPresent(a interface{}) {
+func assertAlertPresent() {
 
 	fmt.Print("[assertAlertPresent] ")
 	_, err := WD.AlertText()

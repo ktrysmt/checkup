@@ -4,40 +4,37 @@ import (
 	"checkup/Godeps/_workspace/src/github.com/k0kubun/pp"
 	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
-	"checkup/errors"
 	"fmt"
 	"os"
-	"regexp"
 	"strconv"
 	"time"
 )
 
 var (
-	WD             selenium.WebDriver
-	StepList       = map[string]func(interface{}){}
-	BaseUrl        = ""
-	DefaultTimeout = "60000"
+	WD               selenium.WebDriver
+	StepList         = map[string]func(){}
+	Browser          = "firefox"
+	DefaultTimeout   = "60000"
+	Arg1, Arg2, Arg3 string
+	BaseUrl          string
 )
 
 func Validate(datas map[interface{}]interface{}) {
 
-	Dive("validate", datas)
+	//Dive("validate", datas)
 
 }
 
 func Do(remote string, datas map[interface{}]interface{}) {
 
-	var browser, baseurl string
-	scan.ScanTree(datas, "/[0]/testcase[0]/browser/", &browser)
+	scan.ScanTree(datas, "/[0]/testcase[0]/browser/", &Browser)
+	scan.ScanTree(datas, "/[0]/testcase[0]/baseurl/", &BaseUrl)
 
-	caps := selenium.Capabilities{"browserName": browser}
-	wd, err1 := selenium.NewRemote(caps, remote)
+	caps := selenium.Capabilities{"browserName": Browser}
+	wd, err := selenium.NewRemote(caps, remote)
 	WD = wd
-	WDFatal(err1)
+	WDFatal(err)
 	defer WD.Quit()
-
-	scan.ScanTree(datas, "/[0]/testcase[0]/baseurl/", &baseurl)
-	BaseUrl = DefineBaseUrl(baseurl)
 
 	SetAroundTimeout(datas)
 
@@ -55,24 +52,18 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 
 		for s, a := range stepSet.(map[interface{}]interface{}) {
 
-			step := SimplifyTypeAttributeTarget(s)
-			args := NestingTarget(SimplifyTypeAttributeValue(a))
+			step := s.(string)
 
-			switch flag {
-			case "validate":
-				_, ok := StepList[step]
-				errors.Syntax(ok, "["+step+"] is undefined step.")
+			scan.ScanTree(a, "/[0]", &Arg1)
+			scan.ScanTree(a, "/[1]", &Arg2)
+			scan.ScanTree(a, "/[2]", &Arg3)
 
-				_, t_ok := args.(map[interface{}]interface{})["target"]
-				errors.Syntax(t_ok, "undefined the [target] attribute.")
-
-				_, v_ok := args.(map[interface{}]interface{})["value"]
-				if v_ok && !t_ok {
-					errors.Syntax(false, "undefined [target] and [value] attributes.")
-				}
-			case "do":
-				StepList[step](args)
+			if _, x := a.(string); x {
+				Arg1 = a.(string)
 			}
+
+			StepList[step]()
+
 		}
 	}
 }
@@ -91,7 +82,6 @@ func WDFatal(err error) {
 	if err != nil {
 		fmt.Println("")
 		fmt.Println(err)
-
 		os.Exit(WDQuit())
 	}
 }
@@ -121,70 +111,6 @@ func PrintStep(name string, a ...interface{}) {
 		pp.Println(arg)
 	}
 	os.Exit(9)
-}
-
-func NestingTarget(o interface{}) interface{} {
-
-	switch o.(type) {
-	case int, string, bool:
-		o = map[interface{}]interface{}{"target": o}
-	}
-	return o
-}
-
-func NormalizeStepSet(o interface{}) interface{} {
-
-	var result map[interface{}]interface{}
-
-	switch o.(type) {
-	case map[interface{}]interface{}:
-		result = o.(map[interface{}]interface{})
-	default:
-		result = map[interface{}]interface{}{o: nil}
-	}
-
-	return result
-
-}
-
-func SimplifyTypeAttributeTarget(o interface{}) string {
-	var v string
-	switch o.(type) {
-	case float64:
-		v = strconv.Itoa(int(o.(float64)))
-	case float32:
-		v = strconv.Itoa(int(o.(float32)))
-	case int:
-		v = strconv.Itoa(o.(int))
-	case bool:
-		v = strconv.FormatBool(o.(bool))
-	case map[interface{}]interface{}:
-		// none
-	case nil:
-		v = ""
-	default:
-		v = o.(string)
-	}
-	return v
-}
-
-func SimplifyTypeAttributeValue(o interface{}) interface{} {
-	var v interface{}
-	switch o.(type) {
-	case float64:
-		v = strconv.Itoa(int(o.(float64)))
-	case float32:
-		v = strconv.Itoa(int(o.(float32)))
-	case int:
-		v = strconv.Itoa(o.(int))
-	case bool:
-		v = strconv.FormatBool(o.(bool))
-	case nil:
-		v = ""
-	default:
-		v = o
-	}
-	return v
 }
 
 func StepFailure(err interface{}) {
@@ -233,27 +159,76 @@ func SetStepTimeout(value string) int {
 }
 
 func SetAroundTimeout(datas map[interface{}]interface{}) {
+
 	var timeout time.Duration
 	scan.ScanTree(datas, "/[0]/testcase[0]/timeout/", &timeout)
 	if timeout == 0 {
-		i, err2 := strconv.Atoi(DefaultTimeout)
-		WDFatal(err2)
+		i, err1 := strconv.Atoi(DefaultTimeout)
+		WDFatal(err1)
 		timeout = time.Duration(i)
 	} else {
 		DefaultTimeout = strconv.Itoa(int(timeout))
 	}
-	WD.SetImplicitWaitTimeout(timeout)
-
+	err2 := WD.SetImplicitWaitTimeout(timeout)
+	WDFatal(err2)
 }
 
-func DefineBaseUrl(url string) string {
-
-	ok, _ := regexp.MatchString("", url)
-
-	str := ""
-	if !ok {
-		str = "x"
+// ===============
+// Unuse funcs ...
+// ===============
+func SimplifyTypeAttributeTarget(o interface{}) string {
+	var v string
+	switch o.(type) {
+	case float64:
+		v = strconv.Itoa(int(o.(float64)))
+	case float32:
+		v = strconv.Itoa(int(o.(float32)))
+	case int:
+		v = strconv.Itoa(o.(int))
+	case bool:
+		v = strconv.FormatBool(o.(bool))
+	case map[interface{}]interface{}:
+		// none
+	case nil:
+		v = ""
+	default:
+		v = o.(string)
 	}
-	// wip define base url
-	return str
+	return v
+}
+func SimplifyTypeAttributeValue(o interface{}) interface{} {
+	var v interface{}
+	switch o.(type) {
+	case float64:
+		v = strconv.Itoa(int(o.(float64)))
+	case float32:
+		v = strconv.Itoa(int(o.(float32)))
+	case int:
+		v = strconv.Itoa(o.(int))
+	case bool:
+		v = strconv.FormatBool(o.(bool))
+	case nil:
+		v = ""
+	default:
+		v = o
+	}
+	return v
+}
+func NestingTarget(o interface{}) interface{} {
+
+	switch o.(type) {
+	case int, string, bool:
+		o = map[interface{}]interface{}{"target": o}
+	}
+	return o
+}
+func NormalizeStepSet(o interface{}) interface{} {
+	var result map[interface{}]interface{}
+	switch o.(type) {
+	case map[interface{}]interface{}:
+		result = o.(map[interface{}]interface{})
+	default:
+		result = map[interface{}]interface{}{o: nil}
+	}
+	return result
 }

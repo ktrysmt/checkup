@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"fmt"
 	"time"
 )
@@ -10,18 +9,11 @@ func init() {
 	StepList["waitForAlertText"] = waitForAlertText
 }
 
-func waitForAlertText(a interface{}) {
+func waitForAlertText() {
 
-	var t interface{}
-	scan.ScanTree(a, "/target", &t)
-	target := t.(string)
+	fmt.Print("[waitForAlertText]: " + Arg1)
 
-	// set timeout
 	limit := SetStepTimeout("")
-
-	fmt.Print("[waitForAlertText]: " + target)
-
-	// wait for
 	latency := 0
 	for {
 		if limit < latency {
@@ -30,7 +22,7 @@ func waitForAlertText(a interface{}) {
 		}
 
 		text, _ := WD.AlertText()
-		if text == target {
+		if text == Arg1 {
 			StepSuccess()
 			break
 		}

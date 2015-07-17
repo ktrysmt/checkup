@@ -2,7 +2,6 @@ testcase:
   - name: drag and drop
     browser: firefox
     steps:
-    - get: http://selenium-client-factory.infradna.com/apidocs/com/saucelabs/selenium/client/htmlunit/SeleniumHTMLUnit.html
-#    - saveScreenshot: bodytext1.png
-#    - saveScreenshot: bodytext2.png  
-    - assertAlertPresent:
+    - get: 
+        http://selenium-client-factory.infradna.com/apidocs/com/saucelabs/selenium/client/htmlunit/SeleniumHTMLUnit.html
+    - assertAlertPresent

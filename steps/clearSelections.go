@@ -1,16 +1,15 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["clearSelections"] = clearSelections
 }
 
-func clearSelections(a interface{}) {
+func clearSelections() {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
 var elem = document.getElementsByXPath(arguments[0]);
@@ -21,17 +20,15 @@ for(i=0;len>i;i++){
 }
 return true;
 `
-	var target string
-	scan.ScanTree(a, "/target", &target)
 
-	fmt.Print("[clearSelections]: " + target)
+	fmt.Print("[clearSelections]: " + Arg1)
 
-	_, err1 := WD.FindElement(selenium.ByXPATH, target)
+	_, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	var err2 error
 
-	arg := []interface{}{target}
+	arg := []interface{}{Arg1}
 	_, err2 = WD.ExecuteScript(SCRIPT, arg)
 	StepFailure(err2)
 

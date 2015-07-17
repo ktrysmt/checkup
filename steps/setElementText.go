@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 )
@@ -10,26 +9,17 @@ func init() {
 	StepList["setElementText"] = setElementText
 }
 
-func setElementText(a interface{}) {
+func setElementText() {
 
-	var t, v interface{}
+	fmt.Print("[setElementText]: " + Arg1 + ", " + Arg2)
 
-	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
-	target := t.(string)
-	value := val.(string)
-
-	fmt.Print("[setElementText]: " + target + " => " + value)
-
-	elem, err1 := WD.FindElement(selenium.ByXPATH, target)
+	elem, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	err2 := elem.Clear()
 	StepFailure(err2)
 
-	err3 := elem.SendKeys(value)
+	err3 := elem.SendKeys(Arg2)
 	StepFailure(err3)
 
 	StepSuccess()

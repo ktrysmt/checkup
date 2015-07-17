@@ -6,12 +6,12 @@ import (
 )
 
 func init() {
-	StepList["waitForTitle"] = waitForTitle
+	StepList["waitForCookiePresent"] = waitForCookiePresent
 }
 
-func waitForTitle() {
+func waitForCookiePresent() {
 
-	fmt.Print("[waitForTitle]: " + Arg1)
+	fmt.Print("[waitForCookiePresent]: " + Arg1)
 
 	limit := SetStepTimeout("")
 	latency := 0
@@ -21,14 +21,17 @@ func waitForTitle() {
 			break
 		}
 
-		url, _ := WD.Title()
-		if url == Arg1 {
-			StepSuccess()
-			break
+		c, _ := WD.GetCookies()
+
+		for _, cookie := range c {
+			if cookie.Name == Arg1 {
+				StepSuccess()
+				break
+			}
+
 		}
 
 		time.Sleep(time.Millisecond * 500)
 		latency += 500
 	}
-
 }

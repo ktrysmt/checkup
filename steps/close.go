@@ -8,7 +8,7 @@ func init() {
 	StepList["close"] = close
 }
 
-func close(a interface{}) {
+func close() {
 
 	fmt.Print("[close]: ")
 	err := WD.Close()

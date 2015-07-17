@@ -2,20 +2,16 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["answerAlert"] = answerAlert
 }
 
-func answerAlert(a interface{}) {
+func answerAlert() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[answerAlert]: " + target)
-	err := WD.SetAlertText(target)
+	fmt.Print("[answerAlert]: " + Arg1)
+	err := WD.SetAlertText(Arg1)
 	StepFailure(err)
 
 	StepSuccess()

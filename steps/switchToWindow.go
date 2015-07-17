@@ -2,20 +2,16 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["switchToWindow"] = switchToWindow
 }
 
-func switchToWindow(a interface{}) {
+func switchToWindow() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[switchToWindow]: " + target)
-	err := WD.SwitchWindow(target)
+	fmt.Print("[switchToWindow]: " + Arg1)
+	err := WD.SwitchWindow(Arg1)
 	StepFailure(err)
 
 	StepSuccess()

@@ -7,12 +7,12 @@ import (
 )
 
 func init() {
-	StepList["waitForElementPresent"] = waitForElementPresent
+	StepList["waitForElementSelected"] = waitForElementSelected
 }
 
-func waitForElementPresent() {
+func waitForElementSelected() {
 
-	fmt.Print("[waitForElementPresent]: " + Arg1)
+	fmt.Print("[waitForElementSelected]: " + Arg1)
 
 	limit := SetStepTimeout("")
 	latency := 0
@@ -22,8 +22,9 @@ func waitForElementPresent() {
 			break
 		}
 
-		_, err := WD.FindElement(selenium.ByXPATH, Arg1)
-		if err != nil {
+		btn, _ := WD.FindElement(selenium.ByXPATH, Arg1)
+
+		if ok, _ := btn.IsSelected(); ok {
 			StepSuccess()
 			break
 		}

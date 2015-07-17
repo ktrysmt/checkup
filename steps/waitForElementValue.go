@@ -7,12 +7,12 @@ import (
 )
 
 func init() {
-	StepList["waitForElementPresent"] = waitForElementPresent
+	StepList["waitForElementValue"] = waitForElementValue
 }
 
-func waitForElementPresent() {
+func waitForElementValue() {
 
-	fmt.Print("[waitForElementPresent]: " + Arg1)
+	fmt.Print("[waitForElementValue]: " + Arg1 + ", " + Arg2)
 
 	limit := SetStepTimeout("")
 	latency := 0
@@ -22,8 +22,10 @@ func waitForElementPresent() {
 			break
 		}
 
-		_, err := WD.FindElement(selenium.ByXPATH, Arg1)
-		if err != nil {
+		elem, _ := WD.FindElement(selenium.ByXPATH, Arg1)
+
+		text, _ := elem.GetAttribute("value")
+		if text == Arg2 {
 			StepSuccess()
 			break
 		}

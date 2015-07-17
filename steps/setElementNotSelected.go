@@ -1,27 +1,23 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["setElementNotSelected"] = setElementNotSelected
 }
 
-func setElementNotSelected(a interface{}) {
+func setElementNotSelected() {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
 var elem = document.getElementsByXPath(arguments[0]);
 return elem[0].selected = false;`
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
+	fmt.Print("[setElementNotSelected]: " + Arg1)
 
-	fmt.Print("[setElementNotSelected]: " + target)
-
-	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	ok, err2 := btn.IsSelected()
@@ -30,7 +26,7 @@ return elem[0].selected = false;`
 	var err3 error
 
 	if ok {
-		arg := []interface{}{target}
+		arg := []interface{}{Arg1}
 		_, err3 = WD.ExecuteScript(SCRIPT, arg)
 		StepFailure(err3)
 	}

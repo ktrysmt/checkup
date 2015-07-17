@@ -2,23 +2,19 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["assertTitle"] = assertTitle
 }
 
-func assertTitle(a interface{}) {
+func assertTitle() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[assertTitle]: " + target)
+	fmt.Print("[assertTitle]: " + Arg1)
 	title, err := WD.Title()
 	StepFailure(err)
 
-	if title == target {
+	if title == Arg1 {
 		StepSuccess()
 	} else {
 		AssertionFailure()

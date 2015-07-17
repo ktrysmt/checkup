@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"fmt"
 	"strings"
 	"time"
@@ -11,23 +10,16 @@ func init() {
 	StepList["waitForTextPresent"] = waitForTextPresent
 }
 
-func waitForTextPresent(a interface{}) {
+func waitForTextPresent() {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
         return document.body.textContent;
 	`
 
-	var t interface{}
-	scan.ScanTree(a, "/target", &t)
-	target := t.(string)
+	fmt.Print("[waitForTextPresent]: " + Arg1)
 
-	// set timeout
-	limit := SetStepTimeout("")
-
-	fmt.Print("[waitForTextPresent]: " + target)
-
-	// wait for
 	arg := []interface{}{}
+	limit := SetStepTimeout("")
 	latency := 0
 	for {
 		if limit < latency {
@@ -35,11 +27,9 @@ func waitForTextPresent(a interface{}) {
 			break
 		}
 
-		b, err3 := WD.ExecuteScript(SCRIPT, arg)
-		StepFailure(err3)
-
+		b, _ := WD.ExecuteScript(SCRIPT, arg)
 		body := b.(string)
-		if m := strings.Index(body, target); m != -1 {
+		if m := strings.Index(body, Arg1); m != -1 {
 			StepSuccess()
 			break
 		}

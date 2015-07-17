@@ -1,22 +1,18 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["switchToFrame"] = switchToFrame
 }
 
-func switchToFrame(a interface{}) {
+func switchToFrame() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[switchToFrame]: " + target)
-	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
+	fmt.Print("[switchToFrame]: " + Arg1)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	id, err2 := btn.GetAttribute("id")

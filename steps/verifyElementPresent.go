@@ -1,23 +1,19 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["verifyElementPresent"] = verifyElementPresent
 }
 
-func verifyElementPresent(a interface{}) {
+func verifyElementPresent() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
+	fmt.Print("[verifyElementPresent]: " + Arg1)
 
-	fmt.Print("[verifyElementPresent]: " + target)
-
-	_, err := WD.FindElement(selenium.ByXPATH, target)
+	_, err := WD.FindElement(selenium.ByXPATH, Arg1)
 
 	if err != nil {
 		VerificationFailure()

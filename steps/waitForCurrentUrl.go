@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"fmt"
 	"time"
 )
@@ -10,18 +9,11 @@ func init() {
 	StepList["waitForCurrentUrl"] = waitForCurrentUrl
 }
 
-func waitForCurrentUrl(a interface{}) {
+func waitForCurrentUrl() {
 
-	var t interface{}
-	scan.ScanTree(a, "/target", &t)
-	target := t.(string)
+	fmt.Print("[waitForCurrentUrl]: " + Arg1)
 
-	// set timeout
 	limit := SetStepTimeout("")
-
-	fmt.Print("[waitForCurrentUrl]: " + target)
-
-	// wait for
 	latency := 0
 	for {
 		if limit < latency {
@@ -30,7 +22,7 @@ func waitForCurrentUrl(a interface{}) {
 		}
 
 		url, _ := WD.CurrentURL()
-		if url == target {
+		if url == Arg1 {
 			StepSuccess()
 			break
 		}

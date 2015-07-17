@@ -2,20 +2,21 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"regexp"
 )
 
 func init() {
 	StepList["get"] = get
 }
 
-func get(a interface{}) {
+func get() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
+	if m, _ := regexp.MatchString("^https?://", BaseUrl); m {
+		Arg1 = BaseUrl + Arg1
+	}
 
-	fmt.Print("[get]: " + target)
-	err := WD.Get(target)
+	fmt.Print("[get]: " + Arg1)
+	err := WD.Get(Arg1)
 	StepFailure(err)
 
 	StepSuccess()

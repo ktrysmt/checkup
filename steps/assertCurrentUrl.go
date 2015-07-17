@@ -2,23 +2,19 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["assertCurrentUrl"] = assertCurrentUrl
 }
 
-func assertCurrentUrl(a interface{}) {
+func assertCurrentUrl() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[assertCurrentUrl]: " + target)
+	fmt.Print("[assertCurrentUrl]: " + Arg1)
 	url, err := WD.CurrentURL()
 	StepFailure(err)
 
-	if url == target {
+	if url == Arg1 {
 		StepSuccess()
 	} else {
 		AssertionFailure()

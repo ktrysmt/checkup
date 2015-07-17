@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"regexp"
 	"checkup/Godeps/_workspace/src/github.com/codegangsta/cli"
 	"checkup/parsers"
 	"checkup/steps"
+	"fmt"
+	"os"
+	"regexp"
 )
 
 func main() {
@@ -25,6 +25,7 @@ func main() {
 		remoteFlag,
 	}
 	app.Run(os.Args)
+
 }
 
 func doBefore(c *cli.Context) error {
@@ -52,6 +53,7 @@ func doMain(c *cli.Context) {
 	datas := parsers.ParseYaml(c.Args())
 
 	steps.Validate(datas)
+
 	steps.Do(c.String("remote"), datas)
 
 }

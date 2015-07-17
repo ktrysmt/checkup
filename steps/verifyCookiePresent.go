@@ -2,25 +2,21 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["verifyCookiePresent"] = verifyCookiePresent
 }
 
-func verifyCookiePresent(a interface{}) {
+func verifyCookiePresent() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[verifyCookiePresent]: " + target)
+	fmt.Print("[verifyCookiePresent]: " + Arg1)
 
 	c, err := WD.GetCookies()
 	StepFailure(err)
 
 	for _, cookie := range c {
-		if cookie.Name == target {
+		if cookie.Name == Arg1 {
 			StepSuccess()
 			return
 		}

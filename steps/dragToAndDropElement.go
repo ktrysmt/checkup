@@ -1,32 +1,22 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["dragToAndDropElement"] = dragToAndDropElement
 }
 
-func dragToAndDropElement(a interface{}) {
+func dragToAndDropElement() {
 
-	var t, v interface{}
+	fmt.Print("[dragToAndDropElement]: " + Arg1 + ", " + Arg2)
 
-	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
-	target := t.(string)
-	value := val.(string)
-
-	fmt.Print("[dragToAndDropElement]: " + target + " => " + value)
-
-	btn_src, err1 := WD.FindElement(selenium.ByXPATH, target)
+	btn_src, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
-	btn_dst, err2 := WD.FindElement(selenium.ByXPATH, value)
+	btn_dst, err2 := WD.FindElement(selenium.ByXPATH, Arg2)
 	StepFailure(err2)
 
 	err3 := btn_src.MoveTo(0, 0)

@@ -1,23 +1,19 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["setElementSelected"] = setElementSelected
 }
 
-func setElementSelected(a interface{}) {
+func setElementSelected() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
+	fmt.Print("[setElementSelected]: " + Arg1)
 
-	fmt.Print("[setElementSelected]: " + target)
-
-	btn, err1 := WD.FindElement(selenium.ByXPATH, target)
+	btn, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	err2 := btn.Click()

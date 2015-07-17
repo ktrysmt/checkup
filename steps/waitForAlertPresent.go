@@ -9,14 +9,11 @@ func init() {
 	StepList["waitForAlertPresent"] = waitForAlertPresent
 }
 
-func waitForAlertPresent(a interface{}) {
-
-	// set timeout
-	limit := SetStepTimeout("")
+func waitForAlertPresent() {
 
 	fmt.Print("[waitForAlertPresent]: ")
 
-	// wait for
+	limit := SetStepTimeout("")
 	latency := 0
 	for {
 		if limit < latency {

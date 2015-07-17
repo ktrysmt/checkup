@@ -8,7 +8,7 @@ func init() {
 	StepList["refresh"] = refresh
 }
 
-func refresh(a interface{}) {
+func refresh() {
 
 	fmt.Print("[refresh]: ")
 	err := WD.Refresh()

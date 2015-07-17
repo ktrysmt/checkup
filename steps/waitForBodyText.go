@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"fmt"
 	"strings"
 	"time"
@@ -11,28 +10,16 @@ func init() {
 	StepList["waitForBodyText"] = waitForBodyText
 }
 
-func waitForBodyText(a interface{}) {
+func waitForBodyText() {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
         return document.body.textContent;
 	`
 
-	var t, v interface{}
+	fmt.Print("[waitForBodyText]: " + Arg1)
 
-	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
-	target := t.(string)
-	value := val.(string)
-
-	// set timeout
-	limit := SetStepTimeout(value)
-
-	fmt.Print("[waitForBodyText]: " + target)
-
-	// wait for
 	arg := []interface{}{}
+	limit := SetStepTimeout(Arg2)
 	latency := 0
 	for {
 		if limit < latency {
@@ -40,11 +27,9 @@ func waitForBodyText(a interface{}) {
 			break
 		}
 
-		b, err3 := WD.ExecuteScript(SCRIPT, arg)
-		StepFailure(err3)
-
+		b, _ := WD.ExecuteScript(SCRIPT, arg)
 		body := b.(string)
-		if m := strings.Index(body, target); m != -1 {
+		if m := strings.Index(body, Arg1); m != -1 {
 			StepSuccess()
 			break
 		}

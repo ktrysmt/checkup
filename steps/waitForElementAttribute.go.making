@@ -1,0 +1,47 @@
+package steps
+
+import (
+	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
+	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
+	"time"
+)
+
+func init() {
+	StepList["waitForElementAttribute"] = waitForElementAttribute
+}
+
+func waitForElementAttribute(a interface{}) {
+
+	var t, v interface{}
+
+	scan.ScanTree(a, "/target", &t)
+	scan.ScanTree(a, "/value", &v)
+	val := SimplifyTypeAttributeValue(v)
+
+	target := t.(string)
+	value := val.(string)
+
+	fmt.Print("[waitForElementAttribute]: " + target + " => " + value)
+
+	limit := SetStepTimeout("")
+	latency := 0
+	for {
+		if limit < latency {
+			StepFailure("It reached a time-out.")
+			break
+		}
+
+		elem, _ := WD.FindElement(selenium.ByXPATH, target)
+
+		text, _ := elem.GetAttribute("value")
+		if text == value {
+			StepSuccess()
+			break
+		}
+
+		time.Sleep(time.Millisecond * 500)
+		latency += 500
+	}
+
+}

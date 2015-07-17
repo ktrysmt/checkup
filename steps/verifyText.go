@@ -1,35 +1,25 @@
 package steps
 
 import (
-	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	"fmt"
 )
 
 func init() {
 	StepList["verifyText"] = verifyText
 }
 
-func verifyText(a interface{}) {
+func verifyText() {
 
-	var t, v interface{}
+	fmt.Print("[verifyText]: " + Arg1 + ", " + Arg2)
 
-	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
-	target := t.(string)
-	value := val.(string)
-
-	fmt.Print("[verifyText]: " + target + " => " + value)
-
-	elem, err1 := WD.FindElement(selenium.ByXPATH, target)
+	elem, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
 	text, err2 := elem.Text()
 	StepFailure(err2)
 
-	if text == value {
+	if text == Arg2 {
 		StepSuccess()
 	} else {
 		VerificationFailure()

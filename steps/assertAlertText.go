@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"fmt"
 )
 
@@ -9,16 +8,13 @@ func init() {
 	StepList["assertAlertText"] = assertAlertText
 }
 
-func assertAlertText(a interface{}) {
+func assertAlertText() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[assertAlertText]: " + target)
+	fmt.Print("[assertAlertText]: " + Arg1)
 	text, err := WD.AlertText()
 	StepFailure(err)
 
-	if text == target {
+	if text == Arg1 {
 		StepSuccess()
 	} else {
 		AssertionFailure()

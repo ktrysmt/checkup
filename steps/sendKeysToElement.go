@@ -6,23 +6,19 @@ import (
 )
 
 func init() {
-	StepList["assertText"] = assertText
+	StepList["sendKeysToElement"] = sendKeysToElement
 }
 
-func assertText() {
+func sendKeysToElement() {
 
-	fmt.Print("[assertText]: " + Arg1 + " => " + Arg2)
+	fmt.Print("[sendKeysToElement]: " + Arg1 + " => " + Arg2)
 
 	elem, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
 	StepFailure(err1)
 
-	text, err2 := elem.Text()
+	err2 := elem.SendKeys(Arg2)
 	StepFailure(err2)
 
-	if text == Arg2 {
-		StepSuccess()
-	} else {
-		AssertionFailure()
-	}
+	StepSuccess()
 
 }

@@ -1,9 +1,9 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -11,23 +11,11 @@ func init() {
 	StepList["waitForText"] = waitForText
 }
 
-func waitForText(a interface{}) {
+func waitForText() {
 
-	var t, v interface{}
+	fmt.Print("[waitForText]: " + Arg1 + ", " + Arg2)
 
-	scan.ScanTree(a, "/target", &t)
-	scan.ScanTree(a, "/value", &v)
-	val := SimplifyTypeAttributeValue(v)
-
-	target := t.(string)
-	value := val.(string)
-
-	// set timeout
 	limit := SetStepTimeout("")
-
-	fmt.Print("[waitForPageSource]: " + target + " => " + value)
-
-	// wait for
 	latency := 0
 	for {
 		if limit < latency {
@@ -35,13 +23,10 @@ func waitForText(a interface{}) {
 			break
 		}
 
-		elem, err1 := WD.FindElement(selenium.ByXPATH, target)
-		StepFailure(err1)
+		elem, _ := WD.FindElement(selenium.ByXPATH, Arg1)
 
-		text, err2 := elem.Text()
-		StepFailure(err2)
-
-		if text == value {
+		text, _ := elem.Text()
+		if m := strings.Index(text, Arg2); m != -1 {
 			StepSuccess()
 			break
 		}

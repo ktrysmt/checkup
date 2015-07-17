@@ -2,23 +2,19 @@ package steps
 
 import (
 	"fmt"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["verifyAlertText"] = verifyAlertText
 }
 
-func verifyAlertText(a interface{}) {
+func verifyAlertText() {
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[verifyAlertText]: " + target)
+	fmt.Print("[verifyAlertText]: " + Arg1)
 	text, err := WD.AlertText()
 	StepFailure(err)
 
-	if text == target {
+	if text == Arg2 {
 		StepSuccess()
 	} else {
 		VerificationFailure()

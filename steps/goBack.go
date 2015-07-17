@@ -8,7 +8,7 @@ func init() {
 	StepList["goBack"] = goBack
 }
 
-func goBack(a interface{}) {
+func goBack() {
 
 	fmt.Print("[goBack]: ")
 	err := WD.Back()

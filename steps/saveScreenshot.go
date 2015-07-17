@@ -10,15 +10,13 @@ func init() {
 	StepList["saveScreenshot"] = saveScreenshot
 }
 
-func saveScreenshot(_filename interface{}) {
+func saveScreenshot() {
 
-	filename := _filename.(string)
-
-	fmt.Print("[saveScreenshot]: " + filename)
+	fmt.Print("[saveScreenshot]: " + Arg1)
 	binary, err := WD.Screenshot()
 
 	if err == nil {
-		err = ioutil.WriteFile(filename, binary, os.ModePerm)
+		err = ioutil.WriteFile(Arg1, binary, os.ModePerm)
 		StepFailure(err)
 
 	} else {

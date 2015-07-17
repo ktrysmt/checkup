@@ -8,7 +8,7 @@ func init() {
 	StepList["dismissAlert"] = dismissAlert
 }
 
-func dismissAlert(a interface{}) {
+func dismissAlert() {
 
 	fmt.Print("[dismissAlert]: ")
 	err := WD.DismissAlert()

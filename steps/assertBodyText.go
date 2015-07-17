@@ -3,30 +3,26 @@ package steps
 import (
 	"fmt"
 	"strings"
-	"checkup/Godeps/_workspace/src/github.com/mattn/go-scan"
 )
 
 func init() {
 	StepList["assertBodyText"] = assertBodyText
 }
 
-func assertBodyText(a interface{}) {
+func assertBodyText() {
 
 	SCRIPT := SCRIPT_getElementsByXPath + `
         return document.body.textContent;
 	`
 
-	var target string
-	scan.ScanTree(a, "/target", &target)
-
-	fmt.Print("[assertBodyText]: " + target)
+	fmt.Print("[assertBodyText]: " + Arg1)
 
 	arg := []interface{}{}
 	b, err := WD.ExecuteScript(SCRIPT, arg)
 	StepFailure(err)
 
 	body := b.(string)
-	m := strings.Index(body, target)
+	m := strings.Index(body, Arg1)
 
 	if m != -1 {
 		StepSuccess()
