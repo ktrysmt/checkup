@@ -50,11 +50,9 @@ func doBefore(c *cli.Context) error {
 
 func doMain(c *cli.Context) {
 
-	datas := parsers.ParseYaml(c.Args())
+	steps.Datas = parsers.ParseYaml(c.Args())
 
-	steps.Validate(datas)
-
-	steps.Do(c.String("remote"), datas)
+	steps.Init(c.String("remote"))
 
 }
 

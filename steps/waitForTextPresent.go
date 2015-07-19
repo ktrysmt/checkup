@@ -29,7 +29,7 @@ func waitForTextPresent() {
 
 		b, _ := WD.ExecuteScript(SCRIPT, arg)
 		body := b.(string)
-		if m := strings.Index(body, Arg1); m != -1 {
+		if strings.Contains(body, Arg1) {
 			StepSuccess()
 			break
 		}

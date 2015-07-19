@@ -5,7 +5,6 @@ import (
 	"checkup/errors"
 	"fmt"
 	"io/ioutil"
-	"os"
 )
 
 var (
@@ -34,16 +33,12 @@ func ParseYaml(yamlfiles []string) map[interface{}]interface{} {
 func readYaml(yamlfile string) (map[interface{}]interface{}, error) {
 
 	data := make(map[interface{}]interface{})
-	handle, err := os.Open(yamlfile)
-	defer handle.Close()
+
+	buf, err := ioutil.ReadFile(yamlfile)
 	if err != nil {
 		return nil, err
 	}
-	buffer, err := ioutil.ReadAll(handle)
-	if err != nil {
-		return nil, err
-	}
-	err = yaml.Unmarshal(buffer, &data)
+	err = yaml.Unmarshal(buf, &data)
 	if err != nil {
 		return nil, err
 	}

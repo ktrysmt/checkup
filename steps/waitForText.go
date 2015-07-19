@@ -26,7 +26,8 @@ func waitForText() {
 		elem, _ := WD.FindElement(selenium.ByXPATH, Arg1)
 
 		text, _ := elem.Text()
-		if m := strings.Index(text, Arg2); m != -1 {
+
+		if strings.Contains(text, Arg2) {
 			StepSuccess()
 			break
 		}

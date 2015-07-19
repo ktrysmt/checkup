@@ -17,15 +17,12 @@ var (
 	DefaultTimeout   = "60000"
 	Arg1, Arg2, Arg3 string
 	BaseUrl          string
+	Datas            map[interface{}]interface{}
 )
 
-func Validate(datas map[interface{}]interface{}) {
+func Init(remote string) {
 
-	//Dive("validate", datas)
-
-}
-
-func Do(remote string, datas map[interface{}]interface{}) {
+	datas := Datas
 
 	scan.ScanTree(datas, "/[0]/testcase[0]/browser/", &Browser)
 	scan.ScanTree(datas, "/[0]/testcase[0]/baseurl/", &BaseUrl)
@@ -38,11 +35,12 @@ func Do(remote string, datas map[interface{}]interface{}) {
 
 	SetAroundTimeout(datas)
 
-	Dive("do", datas)
-
+	Do()
 }
 
-func Dive(flag string, datas map[interface{}]interface{}) {
+func Do() {
+
+	datas := Datas
 
 	steps := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["steps"].([]interface{})
 
@@ -54,16 +52,15 @@ func Dive(flag string, datas map[interface{}]interface{}) {
 
 			step := s.(string)
 
-			scan.ScanTree(a, "/[0]", &Arg1)
-			scan.ScanTree(a, "/[1]", &Arg2)
-			scan.ScanTree(a, "/[2]", &Arg3)
+			scan.ScanTree(a, "/target", &Arg1)
+			scan.ScanTree(a, "/value", &Arg2)
+			scan.ScanTree(a, "/option", &Arg3)
 
 			if _, x := a.(string); x {
 				Arg1 = a.(string)
 			}
 
 			StepList[step]()
-
 		}
 	}
 }
@@ -89,28 +86,6 @@ func WDFatal(err error) {
 func WDQuit() int {
 	defer WD.Quit()
 	return 1
-}
-
-//TODO:------------------------------------------------------
-func PrintStep(name string, a ...interface{}) {
-
-	var target, value interface{}
-
-	ok1 := scan.ScanTree(a, "/[0]/target", &target)
-	ok2 := scan.ScanTree(a, "/[0]/value", &value)
-	pp.Println(a)
-	pp.Println(target)
-	pp.Println(ok1)
-	pp.Println(value)
-	pp.Println(ok2)
-	os.Exit(9)
-
-	for i, arg := range a {
-		pp.Println("----")
-		pp.Println(i)
-		pp.Println(arg)
-	}
-	os.Exit(9)
 }
 
 func StepFailure(err interface{}) {
@@ -231,4 +206,25 @@ func NormalizeStepSet(o interface{}) interface{} {
 		result = map[interface{}]interface{}{o: nil}
 	}
 	return result
+}
+
+func PrintStep(name string, a ...interface{}) {
+
+	var target, value interface{}
+
+	ok1 := scan.ScanTree(a, "/[0]/target", &target)
+	ok2 := scan.ScanTree(a, "/[0]/value", &value)
+	pp.Println(a)
+	pp.Println(target)
+	pp.Println(ok1)
+	pp.Println(value)
+	pp.Println(ok2)
+	os.Exit(9)
+
+	for i, arg := range a {
+		pp.Println("----")
+		pp.Println(i)
+		pp.Println(arg)
+	}
+	os.Exit(9)
 }

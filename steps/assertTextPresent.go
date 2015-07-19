@@ -22,9 +22,7 @@ func assertTextPresent() {
 	StepFailure(err)
 
 	body := b.(string)
-	m := strings.Index(body, Arg2)
-
-	if m != -1 {
+	if strings.Contains(body, Arg2) {
 		StepSuccess()
 	} else {
 		AssertionFailure()
