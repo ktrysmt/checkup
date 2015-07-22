@@ -1,6 +1,9 @@
 {
 	"ImportPath": "checkup",
-	"GoVersion": "go1.4.2",
+	"GoVersion": "go1.4.1",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/codegangsta/cli",
@@ -22,7 +25,8 @@
 		},
 		{
 			"ImportPath": "github.com/tebeka/selenium",
-			"Rev": "cbd856b71439fc77688d43bb13e1015dd073a2ea"
+			"Comment": "v0.8.4-1-g10cd46a",
+			"Rev": "10cd46a429197c2e4c442034513a195098b5a3ba"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml",

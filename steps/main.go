@@ -73,7 +73,7 @@ const SCRIPT_getElementsByXPath = `document.getElementsByXPath = function(expres
   }
   return r;
 }
-`
+return `
 
 func WDFatal(err error) {
 	if err != nil {
