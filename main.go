@@ -37,10 +37,9 @@ func doBefore(c *cli.Context) error {
 		os.Exit(1)
 	}
 	for _, arg := range args {
-		ok, _ := regexp.MatchString(".ya?ml$", arg)
+		ok, _ := regexp.MatchString(`\.ya?ml$`, arg)
 		if !ok {
-			fmt.Println(arg + "is not yaml file.")
-			cli.ShowAppHelp(c)
+			fmt.Println(arg + " is not yaml file.")
 			os.Exit(2)
 		}
 	}
@@ -51,8 +50,9 @@ func doBefore(c *cli.Context) error {
 func doMain(c *cli.Context) {
 
 	steps.Datas = parsers.ParseYaml(c.Args())
-
-	steps.Init(c.String("remote"))
+	for _, data := range steps.Datas {
+		steps.Init(c.String("remote"), data)
+	}
 
 }
 

@@ -19,7 +19,7 @@ func switchToWindowByIndex() {
 	windows, err2 := WD.WindowHandles()
 	StepFailure(err2)
 
-	for index, window := range windows {
+	for index, _ := range windows {
 		if index == number {
 			err3 := WD.SwitchWindow(Arg1)
 			StepFailure(err3)

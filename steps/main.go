@@ -20,12 +20,10 @@ var (
 	Datas            map[interface{}]interface{}
 )
 
-func Init(remote string) {
+func Init(remote string, data interface{}) {
 
-	datas := Datas
-
-	scan.ScanTree(datas, "/[0]/testcase[0]/browser/", &Browser)
-	scan.ScanTree(datas, "/[0]/testcase[0]/baseurl/", &BaseUrl)
+	scan.ScanTree(data, "/testcase[0]/browser/", &Browser)
+	scan.ScanTree(data, "/testcase[0]/baseurl/", &BaseUrl)
 
 	caps := selenium.Capabilities{"browserName": Browser}
 	wd, err := selenium.NewRemote(caps, remote)
@@ -33,16 +31,14 @@ func Init(remote string) {
 	WDFatal(err)
 	defer WD.Quit()
 
-	SetAroundTimeout(datas)
+	SetAroundTimeout(data)
 
-	Do()
+	Do(data)
 }
 
-func Do() {
+func Do(data interface{}) {
 
-	datas := Datas
-
-	steps := datas[0].(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["steps"].([]interface{})
+	steps := data.(map[interface{}]interface{})["testcase"].([]interface{})[0].(map[interface{}]interface{})["steps"].([]interface{})
 
 	for _, ss := range steps {
 
@@ -51,10 +47,15 @@ func Do() {
 		for s, a := range stepSet.(map[interface{}]interface{}) {
 
 			step := s.(string)
+			Arg1, Arg2, Arg3 = "", "", ""
+			var arg1, arg2, arg3 interface{}
 
-			scan.ScanTree(a, "/target", &Arg1)
-			scan.ScanTree(a, "/value", &Arg2)
-			scan.ScanTree(a, "/option", &Arg3)
+			scan.ScanTree(a, "/target", &arg1)
+			scan.ScanTree(a, "/value", &arg2)
+			scan.ScanTree(a, "/option", &arg3)
+			Arg1 = SimplifyTypeAttributeValue(arg1).(string)
+			Arg2 = SimplifyTypeAttributeValue(arg2).(string)
+			Arg3 = SimplifyTypeAttributeValue(arg3).(string)
 
 			if _, x := a.(string); x {
 				Arg1 = a.(string)
@@ -133,10 +134,10 @@ func SetStepTimeout(value string) int {
 	return limit
 }
 
-func SetAroundTimeout(datas map[interface{}]interface{}) {
+func SetAroundTimeout(data interface{}) {
 
 	var timeout time.Duration
-	scan.ScanTree(datas, "/[0]/testcase[0]/timeout/", &timeout)
+	scan.ScanTree(data, "/testcase[0]/timeout/", &timeout)
 	if timeout == 0 {
 		i, err1 := strconv.Atoi(DefaultTimeout)
 		WDFatal(err1)
@@ -148,9 +149,6 @@ func SetAroundTimeout(datas map[interface{}]interface{}) {
 	WDFatal(err2)
 }
 
-// ===============
-// Unuse funcs ...
-// ===============
 func SimplifyTypeAttributeTarget(o interface{}) string {
 	var v string
 	switch o.(type) {
