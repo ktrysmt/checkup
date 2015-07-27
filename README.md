@@ -21,6 +21,10 @@ $ checkup -r http://localhost:4444/wd/hub testcase.yaml https://dl.dropboxuserco
 $ go get github.com/aqafiam/checkup
 ```
 
+## License
+
+MIT
+
 ## Author
 
 [aqafiam](https://github.com/aqafiam)
