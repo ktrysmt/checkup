@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 	"time"
 )
@@ -22,7 +22,7 @@ func waitForElementValue() {
 			break
 		}
 
-		elem, _ := WD.FindElement(selenium.ByXPATH, Arg1)
+		elem, _ := WD.FindElement(SeleniumSelector, Arg1)
 
 		text, _ := elem.GetAttribute("value")
 		if text == Arg2 {

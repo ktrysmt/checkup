@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 	"strings"
 	"time"
@@ -23,7 +23,7 @@ func waitForText() {
 			break
 		}
 
-		elem, _ := WD.FindElement(selenium.ByXPATH, Arg1)
+		elem, _ := WD.FindElement(SeleniumSelector, Arg1)
 
 		text, _ := elem.Text()
 

@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 )
 
@@ -13,10 +13,10 @@ func dragToAndDropElement() {
 
 	fmt.Print("[dragToAndDropElement]: " + Arg1 + ", " + Arg2)
 
-	btn_src, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
+	btn_src, err1 := WD.FindElement(SeleniumSelector, Arg1)
 	StepFailure(err1)
 
-	btn_dst, err2 := WD.FindElement(selenium.ByXPATH, Arg2)
+	btn_dst, err2 := WD.FindElement(SeleniumSelector, Arg2)
 	StepFailure(err2)
 
 	err3 := btn_src.MoveTo(0, 0)

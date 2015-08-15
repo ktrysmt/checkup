@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 )
 
@@ -13,7 +13,7 @@ func verifyText() {
 
 	fmt.Print("[verifyText]: " + Arg1 + ", " + Arg2)
 
-	elem, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
+	elem, err1 := WD.FindElement(SeleniumSelector, Arg1)
 	StepFailure(err1)
 
 	text, err2 := elem.Text()

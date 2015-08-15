@@ -32,7 +32,7 @@ func waitForElementAttribute(a interface{}) {
 			break
 		}
 
-		elem, _ := WD.FindElement(selenium.ByXPATH, target)
+		elem, _ := WD.FindElement(SeleniumSelector, target)
 
 		text, _ := elem.GetAttribute("value")
 		if text == value {

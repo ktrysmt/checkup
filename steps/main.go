@@ -6,6 +6,7 @@ import (
 	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 	"time"
 )
@@ -17,6 +18,7 @@ var (
 	DefaultTimeout   = "60000"
 	Arg1, Arg2, Arg3 string
 	BaseUrl          string
+	SeleniumSelector string
 	Datas            map[interface{}]interface{}
 )
 
@@ -24,6 +26,7 @@ func Init(remote string, data interface{}) {
 
 	scan.ScanTree(data, "/testcase[0]/browser/", &Browser)
 	scan.ScanTree(data, "/testcase[0]/baseurl/", &BaseUrl)
+	scan.ScanTree(data, "/testcase[0]/selector/", &SeleniumSelector)
 
 	caps := selenium.Capabilities{"browserName": Browser}
 	wd, err := selenium.NewRemote(caps, remote)
@@ -32,6 +35,7 @@ func Init(remote string, data interface{}) {
 	defer WD.Quit()
 
 	SetAroundTimeout(data)
+	SetSelector()
 
 	Do(data)
 }
@@ -86,7 +90,7 @@ func WDFatal(err error) {
 
 func WDQuit() int {
 	defer WD.Quit()
-	return 1
+	return 2
 }
 
 func StepFailure(err interface{}) {
@@ -132,6 +136,16 @@ func SetStepTimeout(value string) int {
 	StepFailure(err1)
 
 	return limit
+}
+
+func SetSelector() {
+	if m, _ := regexp.MatchString("(?i)^xpath$", SeleniumSelector); m {
+		SeleniumSelector = "xpath"
+	} else if m, _ := regexp.MatchString("(?i)^css ?selector$", SeleniumSelector); m {
+		SeleniumSelector = "css selector"
+	} else {
+		SeleniumSelector = "xpath"
+	}
 }
 
 func SetAroundTimeout(data interface{}) {

@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 	"time"
 )
@@ -22,7 +22,7 @@ func waitForElementSelected() {
 			break
 		}
 
-		btn, _ := WD.FindElement(selenium.ByXPATH, Arg1)
+		btn, _ := WD.FindElement(SeleniumSelector, Arg1)
 
 		if ok, _ := btn.IsSelected(); ok {
 			StepSuccess()

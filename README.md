@@ -49,6 +49,15 @@ $ go get github.com/aqafiam/checkup
 - make steps about StoreXXX command
 - Use the color in STDOUT for readability
 
+## Run Docker to use selenium-hub easily in your localhost
+
+```
+docker ps -aq | xargs docker rm # remove trush at first ...
+docker run -d -p 4444:4444 --name selenium-hub selenium/hub
+docker run -d --link selenium-hub:hub selenium/node-chrome-debug
+docker run -d --link selenium-hub:hub selenium/node-firefox-debug
+```
+
 ## License
 
 MIT

@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 )
 
@@ -13,7 +13,7 @@ func clickAndHoldElement() {
 
 	fmt.Print("[clickAndHoldElement]: " + Arg1)
 
-	btn, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
+	btn, err1 := WD.FindElement(SeleniumSelector, Arg1)
 	StepFailure(err1)
 
 	err2 := btn.MoveTo(0, 0)

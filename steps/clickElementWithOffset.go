@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 	"strconv"
 )
@@ -19,7 +19,7 @@ func clickElementWithOffset() {
 	h, err2 := strconv.Atoi(Arg3)
 	StepFailure(err2)
 
-	elem, err3 := WD.FindElement(selenium.ByXPATH, Arg1)
+	elem, err3 := WD.FindElement(SeleniumSelector, Arg1)
 	StepFailure(err3)
 
 	err4 := elem.MoveTo(w, h)

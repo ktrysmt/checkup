@@ -1,7 +1,7 @@
 package steps
 
 import (
-	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
+	//	"checkup/Godeps/_workspace/src/github.com/tebeka/selenium"
 	"fmt"
 )
 
@@ -23,7 +23,7 @@ return true;
 
 	fmt.Print("[clearSelections]: " + Arg1)
 
-	_, err1 := WD.FindElement(selenium.ByXPATH, Arg1)
+	_, err1 := WD.FindElement(SeleniumSelector, Arg1)
 	StepFailure(err1)
 
 	var err2 error

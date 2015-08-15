@@ -5,7 +5,11 @@ testcase:
     timeout: "10001"
     steps:
     - get: https://code.google.com/p/selenium/wiki/JsonWireProtocol
-    - waitForBodyText: "Wire Protocol"
-    - waitForText: 
-        target: //*[@id="mt"]/a[5]/button
-        value:  "Export to GitHub"
+    - setElementText:
+        target: /html/body/div[1]/table/tbody/tr/td[3]/form/input[1] 
+        value:  "Export to GitHub" 
+    #    - waitForBodyText: "Wire Protocol"
+    #    - waitForText: 
+    #        target: //*[@id="mt"]/a[5]/button
+    #        value:  "Export to GitHub"
+    - saveScreenshot: test.png
