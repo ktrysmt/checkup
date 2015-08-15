@@ -1,0 +1,12 @@
+testcase:
+- name: samplecodes
+  browser: firefox
+  steps:
+    - get: http://www.htmq.com/html5/select.shtml
+    - saveScreenshot: multi_select1.png
+    - setElementNotSelected: 
+        target: //*[@id="contact"]/option[3]
+    - saveScreenshot: multi_select2.png  
+    - clearSelections: 
+        target: //*[@id="contact"]
+    - saveScreenshot: multi_select3.png  
