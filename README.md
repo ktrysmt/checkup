@@ -26,6 +26,7 @@ $ checkup -r http://localhost:4444/wd/hub testcase.yaml https://dl.dropboxuserco
 testcase:
 - name: sample test
   browser: firefox
+  selector: xpath # Use "xpath" or "css selector", default is "xpath"
   steps:
     - get: https://code.google.com/p/selenium/wiki/Buck
     - saveScreenshot: sele1.png
