@@ -12,13 +12,13 @@ $ checkup -r http://localhost:4444/wd/hub testcase.yaml
 also use remote yamlfile...
  
 ```
-$ checkup -r http://localhost:4444/wd/hub testcase.yaml https://dl.dropboxusercontent.com/s/8zm9smw00oc/test.yml
+$ checkup -r http://localhost:4444/wd/hub https://dl.dropboxusercontent.com/s/8zm9smw00oc/test.yml
 ```
 
 ## Format
 
 - Type YAML Format at the file.
-- Use XPATH to Access DOM-Element
+- Use XPATH or CSS-Selector to Access the DOM-Element.
 
 ## Example
 
@@ -41,18 +41,18 @@ testcase:
 $ go get github.com/aqafiam/checkup
 ```
 
-## Feature
+## Future
 
-- Support CSS-Selector
-- Support to select CSS-Selector or XPATH
-- Add more example source
-- write Reference for how to use
-- make steps about StoreXXX command
-- Use the color in STDOUT for readability
+[ ] Support CSS-Selector
+[ ] Support to select CSS-Selector or XPATH
+[ ] Add more example source
+[ ] write Reference for how to use
+[ ] make steps about StoreXXX command
+[ ] Use the color in STDOUT for readability
 
-## Replation (about Selenium-Hub)
+## (Optional) Use Selenium-Hub
 
-Run Docker to use selenium-hub easily in your localhost.
+Run docker to use Selenium-Hub easily in your localhost.
 
 ```
 docker ps -aq | xargs docker rm # remove trush at first ...
