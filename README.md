@@ -67,9 +67,9 @@ docker run -d --link selenium-hub:hub selenium/node-firefox-debug
 
 ## License
 
-MIT
+[MIT](./LICENSE)
 
 ## Author
 
-[aqafiam](https://github.com/aqafiam)
+[ktrysmt](https://github.com/ktrysmt)
 
