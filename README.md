@@ -1,7 +1,11 @@
 # Checkup
 
-Checkup is E2E testing tool made by Golang.  
-You can write testcases easily that Syntax is YAML format.
+<a class="repo-badge" href="https://badge.fury.io/for/go/github.com/ktrysmt/checkup"><img src="https://badge.fury.io/go/github.com%2Fktrysmt%2Fcheckup.svg" alt="Github.com%2fktrysmt%2fcheckup"></a>
+    <a class="repo-badge" href="https://godoc.org/github.com/ktrysmt/checkup"><img src="https://godoc.org/github.com/ktrysmt/checkup?status.svg" alt="Checkup?status"></a>
+    <a class="repo-badge" href="https://goreportcard.com/report/github.com/ktrysmt/checkup"><img src="https://goreportcard.com/badge/github.com/ktrysmt/checkup" alt="Checkup"></a>
+
+> Checkup is E2E testing tool made by Golang.  
+> You can write testcases easily that Syntax is YAML format.
 
 ## Usage
 
