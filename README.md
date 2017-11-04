@@ -42,7 +42,7 @@ testcase:
 ## Install
 
 ```
-$ go get github.com/aqafiam/checkup
+$ go get github.com/ktrysmt/checkup
 ```
 
 ## Future
